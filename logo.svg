@@ -1,0 +1,24 @@
+<svg
+    width="256"
+    height="256"
+    viewBox="0 0 256 256"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <!-- Circular background in Go brand color -->
+    <circle cx="128" cy="128" r="96" fill="#00ADD8" />
+
+    <!-- Gopher ears (white circles) -->
+    <circle cx="90"  cy="70" r="14" fill="#FFFFFF" />
+    <circle cx="166" cy="70" r="14" fill="#FFFFFF" />
+
+    <!-- Gopher muzzle (white ellipse) -->
+    <ellipse cx="128" cy="162" rx="28" ry="22" fill="#FFFFFF" />
+
+    <!-- Gopher eyes (dark circles) -->
+    <circle cx="108" cy="120" r="7" fill="#333333" />
+    <circle cx="148" cy="120" r="7" fill="#333333" />
+
+    <!-- Optional: Gopher nose (tiny darker circle) -->
+    <circle cx="128" cy="150" r="3.5" fill="#333333" />
+</svg>

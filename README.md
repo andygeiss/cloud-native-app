@@ -39,5 +39,11 @@ just install
 ### Usage
 
 ```bash
-cloud-native-app <my/module>
+cloud-native-app <Module>
+```
+
+### Example
+
+```bash
+cloud-native-app github.com/andygeiss/my-new-repo
 ```

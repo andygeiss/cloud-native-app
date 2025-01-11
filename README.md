@@ -8,6 +8,7 @@
 [![Releases](https://img.shields.io/github/v/release/andygeiss/cloud-native-app)](https://github.com/andygeiss/cloud-native-app/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/andygeiss/cloud-native-app)](https://goreportcard.com/report/github.com/andygeiss/cloud-native-app)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/30de4509fb6d4b388e2dc52157afb0fd)](https://app.codacy.com/gh/andygeiss/cloud-native-app/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/30de4509fb6d4b388e2dc52157afb0fd)](https://app.codacy.com/gh/andygeiss/cloud-native-app/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 **Cloud Native App** automates the process of bootstrapping a repository.
 It generates a project structure with everything you need to start coding right away.

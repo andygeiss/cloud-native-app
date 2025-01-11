@@ -28,7 +28,7 @@ Follow these steps to set up and run the **Cloud Native App**:
 ### Prerequisites
 
 1. Install the latest version of [Go](https://golang.org/dl/).
-2. Install the latest version of [Just](
+2. Install the latest version of [Just](https://github.com/casey/just).
 
 ### Installation
 

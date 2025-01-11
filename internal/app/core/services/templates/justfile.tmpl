@@ -1,14 +1,14 @@
-set dotenv-load
+{{ define "justfile" }}set dotenv-load
 
 # Compile the Go sources.
 build:
     @go build \
     -ldflags "-s -w" \
-    -o ./bin/$(basename $PWD) ./cmd/app/main.go
+    -o ./bin/$(basename $PWD) ./cmd/service/main.go
 
-# Install the binary to the $HOME/bin directory.
-install:
-    @cp ./bin/$(basename $PWD) $HOME/bin/$(basename $PWD)
+# Generate an encryption key.
+genkey:
+    @go run cmd/genkey/main.go
 
 # Run the Go sources.
 run:
@@ -17,3 +17,4 @@ run:
 # Test the Go sources (Units).
 test:
     @go test -v -coverprofile=.coverprofile.out ./internal/app/...
+{{ end }}

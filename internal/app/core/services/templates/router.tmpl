@@ -1,0 +1,29 @@
+{{ define "router.go" }}package api
+
+import (
+	"context"
+	"net/http"
+
+	"{{ .Module }}/internal/app/config"
+
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/templating"
+)
+
+// Route creates a new mux with the liveness and readiness probe (/liveness, /readiness),
+// the static assets endpoint (/) and the store endpoints (/api/v1/store).
+func Route(ctx context.Context, cfg *config.Config) *http.ServeMux {
+	// Create a new mux with liveness and readyness endpoint.
+	// Embed the assets into the mux.
+	mux, serverSessions := security.NewServeMux(ctx, cfg.Efs)
+
+	// Create a new templating engine and parse the templates.
+	engine := templating.NewEngine(cfg.Efs)
+	engine.Parse(cfg.Templates)
+
+	// Add the UI endpoints for HTMX.
+	mux.HandleFunc("GET /ui", ViewIndex(engine, serverSessions))
+	mux.HandleFunc("GET /ui/home", ViewHome(engine, serverSessions))
+	return mux
+}
+{{ end }}

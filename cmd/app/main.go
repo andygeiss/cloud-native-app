@@ -2,22 +2,40 @@ package main
 
 import (
 	"embed"
-	"log"
+	"encoding/hex"
 	"os"
-	"path/filepath"
 
+	"github.com/andygeiss/cloud-native-app/internal/app/adapters/outbound"
 	"github.com/andygeiss/cloud-native-app/internal/app/config"
+	"github.com/andygeiss/cloud-native-app/internal/app/core/services"
+	"github.com/andygeiss/cloud-native-utils/security"
 )
 
-//go:embed resources
+//go:embed templates
 var efs embed.FS
 
-var version string
-
 func main() {
-	cfg := &config.Config{
-		Efs:  efs,
-		Name: filepath.Base(os.Getenv("PWD")),
+	// Check if the module name is provided.
+	if len(os.Args) != 2 {
+		panic("module name is missing")
 	}
-	log.Printf("%s (%s)", cfg.Name, version)
+	module := os.Args[1]
+
+	// Create a configuration.
+	key := security.GenerateKey()
+	cfg := &config.Config{
+		Efs:       efs,
+		Key:       hex.EncodeToString(key[:]),
+		Module:    module,
+		Templates: "templates/*",
+	}
+	cfg.TemplatesPort = outbound.NewTemplatesAdapter(cfg)
+
+	// Create a new service.
+	svc := services.NewService(cfg)
+
+	// Create a new module.
+	if err := svc.CreateModule(); err != nil {
+		panic(err)
+	}
 }

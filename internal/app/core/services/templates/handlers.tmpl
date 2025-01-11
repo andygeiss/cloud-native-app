@@ -1,0 +1,36 @@
+{{ define "handlers.go" }}package api
+
+import (
+	"net/http"
+
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/templating"
+)
+
+// View defines an HTTP handler function for rendering a template with data.
+func View(engine *templating.Engine, name string, data any) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		engine.Render(w, name, data)
+	}
+}
+
+// ViewHome defines an HTTP handler function for rendering the home template.
+func ViewHome(engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.FormValue("s")
+		session, _ := serverSessions.Get(id)
+		View(engine, "home", session)(w, r)
+	}
+}
+
+// ViewIndex defines an HTTP handler function for rendering the index template.
+func ViewIndex(engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.FormValue("s")
+		session, _ := serverSessions.Get(id)
+		View(engine, "index", session)(w, r)
+	}
+}
+
+{{ end }}

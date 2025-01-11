@@ -1,0 +1,12 @@
+{{ define "config.go" }}package config
+
+import (
+	"embed"
+)
+
+// Config is the configuration for the application.
+type Config struct {
+	Efs embed.FS `json:"-"`
+	Templates string `json:"templates"`
+}
+{{ end }}

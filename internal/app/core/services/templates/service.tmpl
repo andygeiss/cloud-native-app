@@ -1,0 +1,54 @@
+{{ define "main.go" }}package main
+
+import (
+	"context"
+	"embed"
+	"log"
+	"net/http"
+	"os"
+
+	"{{ .Module }}/internal/app/adapters/outbound/api"
+	"{{ .Module }}/internal/app/config"
+
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/service"
+)
+
+//go:embed assets
+var efs embed.FS
+
+func main() {
+	// Create a new configuration with the embedded file system.
+	cfg := &config.Config{
+		Efs:       efs,
+		Templates: "assets/*",
+	}
+
+	// Create a new context with a cancel function.
+	ctx, cancel := service.Context()
+	defer cancel()
+
+	// Create a new service with the configuration.
+	mux := api.Route(ctx, cfg)
+	srv := security.NewServer(mux)
+	defer srv.Close()
+
+	service.RegisterOnContextDone(ctx, func() {
+		// TODO: Cleanup resources.
+		srv.Shutdown(context.Background())
+	})
+
+	// Start the HTTP server in the main goroutine.
+	log.Printf("start listening at port %s ...", os.Getenv("PORT"))
+	if err := srv.ListenAndServe(); err != nil {
+		// Check if the server was closed intentionally.
+		if err == http.ErrServerClosed {
+			log.Println("server is closed.")
+			return
+		}
+
+		// Log the error and terminate the program.
+		log.Fatalf("listening failed: %v", err)
+	}
+}
+{{ end }}

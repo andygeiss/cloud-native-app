@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/andygeiss/cloud-native-app/blob/main/logo.svg?raw=true" />
+<img src="https://github.com/andygeiss/cloud-native-app/blob/main/logo.png?raw=true" />
 </p>
 
 # Cloud Native App

@@ -38,6 +38,21 @@ func main() {
 		srv.Shutdown(context.Background())
 	})
 
+	// Log the environment-based configuration.
+	log.Printf("server configuration:")
+	log.Printf("  - idle timeout: %s", security.ParseDuration("SERVER_IDLE_TIMEOUT", time.Second*5))
+	log.Printf("  - read header timeout: %s", security.ParseDuration("SERVER_READ_HEADER_TIMEOUT", time.Second*5))
+	log.Printf("  - read timeout: %s", security.ParseDuration("SERVER_READ_TIMEOUT", time.Second*5))
+	log.Printf("  - write timeout: %s", security.ParseDuration("SERVER_WRITE_TIMEOUT", time.Second*5))
+	log.Println()
+	log.Printf("service configuration:")
+	log.Printf("  - breaker threshold: %d", security.ParseInt("SERVICE_BREAKER_THRESHOLD", 5))
+	log.Printf("  - debounce per second: %d", security.ParseInt("SERVICE_DEBOUNCE_PER_SEC", 10))
+	log.Printf("  - retry delay: %s", security.ParseDuration("SERVICE_RETRY_DELAY", time.Second*5))
+	log.Printf("  - retry max: %d", security.ParseInt("SERVICE_RETRY_MAX", 3))
+	log.Printf("  - timeout: %s", security.ParseDuration("SERVICE_TIMEOUT", time.Second*5))
+	log.Println()
+
 	// Start the HTTP server in the main goroutine.
 	log.Printf("start listening at port %s ...", os.Getenv("PORT"))
 	if err := srv.ListenAndServe(); err != nil {

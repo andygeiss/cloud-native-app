@@ -11,7 +11,7 @@ import (
 )
 
 // Route creates a new mux with the liveness and readiness probe (/liveness, /readiness),
-// the static assets endpoint (/) and the store endpoints (/api/v1/store).
+// the static assets endpoint (/) and the ui endpoints (/ui).
 func Route(ctx context.Context, cfg *config.Config) *http.ServeMux {
 	// Create a new mux with liveness and readyness endpoint.
 	// Embed the assets into the mux.

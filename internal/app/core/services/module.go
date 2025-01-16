@@ -96,28 +96,16 @@ func (a *ModuleService) CreateModule() error {
     <head>
         <meta charset="UTF-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
         <title> Title </title>
     </head>
-    <body hx-get="/ui/home?s={{ .ID }}" hx-trigger="load"></body>
+    <body>
+    	<h1>It works!</h1>
+    </body>
 </html>
 {{ end }}`
 
-	// Write the keepalive to the module directory.
+	// Write the index.html to the module directory.
 	if err := os.WriteFile("cmd/service/assets/index.html", []byte(index), 0644); err != nil {
-		return err
-	}
-
-	// Get the home.html template.
-	home := `{{ define "home" }} {{ if .ID }}
-<img src="{{ .AvatarURL }}" style="width: 32px; height: 32px" />
-<p>Hello {{ .Name }} !</p>
-{{ else}}
-<a href="/auth/login">Login with GitHub</a>
-{{ end }} {{ end }}`
-
-	// Write the keepalive to the module directory.
-	if err := os.WriteFile("cmd/service/assets/home.html", []byte(home), 0644); err != nil {
 		return err
 	}
 

@@ -15,21 +15,12 @@ func View(engine *templating.Engine, name string, data any) http.HandlerFunc {
 	}
 }
 
-// ViewHome defines an HTTP handler function for rendering the home template.
-func ViewHome(engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		id := r.FormValue("s")
-		session, _ := serverSessions.Get(id)
-		View(engine, "home", session)(w, r)
-	}
-}
-
 // ViewIndex defines an HTTP handler function for rendering the index template.
 func ViewIndex(engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		id := r.FormValue("s")
-		session, _ := serverSessions.Get(id)
-		View(engine, "index", session)(w, r)
+	    //id := r.Header.Get("X-Session-ID")
+		//session, _ := serverSessions.Get(id)
+		View(engine, "index", nil)(w, r)
 	}
 }
 

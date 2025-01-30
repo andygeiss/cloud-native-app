@@ -1,0 +1,18 @@
+{{ define "middleware.go" }}package api
+
+import (
+	"log"
+	"net/http"
+	"time"
+)
+
+// WithLogging logs the request with method, path and duration.
+func WithLogging(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Log the request with method, path and duration.
+		start := time.Now()
+		next(w, r)
+		log.Printf("%s %s %v", r.Method, r.RequestURI, time.Since(start))
+	}
+}
+{{ end }}

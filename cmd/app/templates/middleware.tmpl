@@ -12,7 +12,7 @@ func WithLogging(next http.HandlerFunc) http.HandlerFunc {
 		// Log the request with method, path and duration.
 		start := time.Now()
 		next(w, r)
-		log.Printf("%s %s %v", r.Method, r.RequestURI, time.Since(start))
+		log.Printf("⌛ %s %s %v", r.Method, r.RequestURI, time.Since(start))
 	}
 }
 {{ end }}

@@ -39,16 +39,16 @@ func main() {
 	})
 
 	// Start the HTTP server in the main goroutine.
-	log.Printf("start listening at port %s ...", os.Getenv("PORT"))
+	log.Printf("🚀 start listening at port %s ...", os.Getenv("PORT"))
 	if err := srv.ListenAndServe(); err != nil {
 		// Check if the server was closed intentionally.
 		if err == http.ErrServerClosed {
-			log.Println("server is closed.")
+			log.Println("👺 server is closed.")
 			return
 		}
 
 		// Log the error and terminate the program.
-		log.Fatalf("listening failed: %v", err)
+		log.Fatalf("👺 listening failed: %v", err)
 	}
 }
 {{ end }}

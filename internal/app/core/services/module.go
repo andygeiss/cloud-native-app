@@ -65,17 +65,6 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	// Get the justfile template.
-	dockerfile, err := a.templatesPort.Get("dockerfile", a.cfg)
-	if err != nil {
-		return err
-	}
-
-	// Write the justfile to the module directory.
-	if err := os.WriteFile("Dockerfile", dockerfile, 0644); err != nil {
-		return err
-	}
-
 	os.MkdirAll("cmd/genkey", 0755)
 
 	genkey, err := a.templatesPort.Get("genkey.go", a.cfg)

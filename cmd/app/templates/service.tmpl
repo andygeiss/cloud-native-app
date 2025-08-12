@@ -21,7 +21,7 @@ func main() {
 	// Create a new configuration with the embedded file system.
 	cfg := &config.Config{
 		Efs:       efs,
-		Templates: "assets/*",
+		Templates: "assets/*.html",
 	}
 
 	// Create a new context with a cancel function.

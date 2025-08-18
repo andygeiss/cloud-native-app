@@ -1,5 +1,5 @@
-github.com/andygeiss/cloud-native-utils v0.1.71 h1:dT3mzPDO7CXLei4BOgAXZUryirKC7eO/AfogBah7Tgc=
-github.com/andygeiss/cloud-native-utils v0.1.71/go.mod h1:9N7aVgH6Tzz2lG7Uhsnxr163IBL/EA19tFWeXYraGgk=
+github.com/andygeiss/cloud-native-utils v0.1.73 h1:GIkw+QYKhxVBwHNqr5kyDjnbr2YrTBMCaYNu2gpxcZk=
+github.com/andygeiss/cloud-native-utils v0.1.73/go.mod h1:9N7aVgH6Tzz2lG7Uhsnxr163IBL/EA19tFWeXYraGgk=
 golang.org/x/crypto v0.41.0 h1:WKYxWedPGCTVVl5+WHSSrOBT0O8lx32+zxmHxijgXp4=
 golang.org/x/crypto v0.41.0/go.mod h1:pO5AFd7FA68rFak7rOAGVuygIISepHftHnr8dr6+sUc=
 golang.org/x/net v0.42.0 h1:jzkYrhi3YQWD6MLBJcsklgQsoAcw89EcZbJw8Z614hs=

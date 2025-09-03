@@ -3,6 +3,8 @@
 import (
 	"net/http"
 
+	"{{ .Module }}/internal/app/config"
+
 	"github.com/andygeiss/cloud-native-utils/security"
 	"github.com/andygeiss/cloud-native-utils/templating"
 )
@@ -10,17 +12,24 @@ import (
 // View defines an HTTP handler function for rendering a template with data.
 func View(engine *templating.Engine, name string, data any) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
 		engine.Render(w, name, data)
 	}
 }
 
 // ViewIndex defines an HTTP handler function for rendering the index template.
-func ViewIndex(engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
+func ViewIndex(cfg *config.Config, engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-	    //id := r.Header.Get("X-Session-ID")
-		//session, _ := serverSessions.Get(id)
+	    start := time.Now()
+
+        // Render the template using the provided engine and data.
 		View(engine, "index", nil)(w, r)
+
+		// Log the request with method, path and duration.
+		cfg.Logging.Info(
+			"handler executed",
+			"handler", "ViewIndex",
+			"duration", time.Since(start),
+		)
 	}
 }
 

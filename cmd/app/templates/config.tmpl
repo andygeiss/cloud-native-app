@@ -2,11 +2,13 @@
 
 import (
 	"embed"
+	"log/slog"
 )
 
 // Config is the configuration for the application.
 type Config struct {
-	Efs embed.FS `json:"-"`
-	Templates string `json:"templates"`
+	Efs       embed.FS     `json:"-"`
+	Logging   *slog.Logger `json:"-"`
+	Templates string       `json:"templates"`
 }
 {{ end }}

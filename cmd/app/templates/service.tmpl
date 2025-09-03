@@ -21,6 +21,7 @@ func main() {
 	// Create a new configuration with the embedded file system.
 	cfg := &config.Config{
 		Efs:       efs,
+		Logging:   slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug})),
 		Templates: "assets/*.html",
 	}
 
@@ -39,16 +40,25 @@ func main() {
 	})
 
 	// Start the HTTP server in the main goroutine.
-	log.Printf("🚀 start listening at port %s ...", os.Getenv("PORT"))
+	cfg.Logging.Info(
+		"server initialized",
+		"port", os.Getenv("PORT"),
+	)
 	if err := srv.ListenAndServe(); err != nil {
 		// Check if the server was closed intentionally.
 		if err == http.ErrServerClosed {
-			log.Println("👺 server is closed.")
+			cfg.Logging.Error(
+				"server closed",
+				"reason", "server closed intentionally",
+			)
 			return
 		}
 
 		// Log the error and terminate the program.
-		log.Fatalf("👺 listening failed: %v", err)
+		cfg.Logging.Error(
+			"server failed",
+			"reason", fmt.Sprintf("listening failed: %v", err),
+		)
 	}
 }
 {{ end }}

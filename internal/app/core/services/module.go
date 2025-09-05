@@ -91,10 +91,11 @@ func (a *ModuleService) CreateModule() error {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
-	<title>{{ .Module }}</title>
+	<link rel="stylesheet" href="/assets/styles.css">
+	<title> Kafka Demo </title>
 </head>
 <body>
-	<button hx-post="/api/producer" hx-target="#response">demo</button>
+	<button hx-post="/api/producer" hx-target="#response"> Send Message </button>
 	<div id="response"></div>
 </body>
 </html>
@@ -103,6 +104,13 @@ func (a *ModuleService) CreateModule() error {
 
 	// Write the index.html to the module directory.
 	if err := os.WriteFile("cmd/service/assets/index.html", index, 0644); err != nil {
+		return err
+	}
+
+	// Write the styles.css.
+	styles, _ := a.templatesPort.Get("styles", a.cfg)
+
+	if err := os.WriteFile("cmd/service/assets/styles.css", styles, 0644); err != nil {
 		return err
 	}
 

@@ -11,6 +11,7 @@ import (
 	"{{ .Module }}/internal/app/adapters/api"
 	"{{ .Module }}/internal/app/config"
 
+	"github.com/andygeiss/cloud-native-utils/messaging"
 	"github.com/andygeiss/cloud-native-utils/security"
 	"github.com/andygeiss/cloud-native-utils/service"
 )
@@ -19,16 +20,17 @@ import (
 var efs embed.FS
 
 func main() {
+	// Create a new context with a cancel function.
+	ctx, cancel := service.Context()
+	defer cancel()
+
 	// Create a new configuration with the embedded file system.
 	cfg := &config.Config{
 		Efs:       efs,
 		Logging:   slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug})),
+		Messaging: messaging.NewKafkaDispatcher(ctx),
 		Templates: "assets/*.html",
 	}
-
-	// Create a new context with a cancel function.
-	ctx, cancel := service.Context()
-	defer cancel()
 
 	// Create a new service with the configuration.
 	mux := api.Route(ctx, cfg)

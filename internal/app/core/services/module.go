@@ -65,12 +65,17 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	os.MkdirAll("cmd/genkey", 0755)
+	os.MkdirAll("cmd/cli", 0755)
 
-	genkey, err := a.templatesPort.Get("genkey.go", a.cfg)
-	if err != nil {
+	cli, _ := a.templatesPort.Get("cli", a.cfg)
+	if err := os.WriteFile("cmd/cli/main.go", cli, 0644); err != nil {
 		return err
 	}
+
+	os.MkdirAll("cmd/genkey", 0755)
+
+	// Get the genkey/main.go template.
+	genkey, _ := a.templatesPort.Get("genkey.go", a.cfg)
 
 	if err := os.WriteFile("cmd/genkey/main.go", genkey, 0644); err != nil {
 		return err
@@ -79,22 +84,25 @@ func (a *ModuleService) CreateModule() error {
 	os.MkdirAll("cmd/service/assets", 0755)
 
 	// Get the index.html template.
-	index := `{{ define "index" }}
-<!doctype html>
+	index := []byte(`{{ define "index" }}
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <title> Title </title>
-    </head>
-    <body>
-    	<h1>It works!</h1>
-    </body>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
+	<title>{{ .Module }}</title>
+</head>
+<body>
+	<button hx-post="/api/producer" hx-target="#response">demo</button>
+	<div id="response"></div>
+</body>
 </html>
-{{ end }}`
+{{ end }}
+`)
 
 	// Write the index.html to the module directory.
-	if err := os.WriteFile("cmd/service/assets/index.html", []byte(index), 0644); err != nil {
+	if err := os.WriteFile("cmd/service/assets/index.html", index, 0644); err != nil {
 		return err
 	}
 

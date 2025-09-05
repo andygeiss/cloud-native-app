@@ -1,0 +1,34 @@
+{{ define "cli" }}package main
+
+import (
+	"fmt"
+
+	"github.com/andygeiss/cloud-native-utils/messaging"
+	"github.com/andygeiss/cloud-native-utils/service"
+)
+
+func main() {
+	// Create a new context for a service and
+	// exit on signals from the terminal.
+	doneChan := make(chan bool)
+	ctx, _ := service.Context()
+	service.RegisterOnContextDone(ctx, func() {
+		doneChan <- true
+	})
+
+	fmt.Println("🚀 consumer started")
+
+	// Create a new Kafka dispatcher and subscribe to the topic.
+	client := messaging.NewKafkaDispatcher(ctx)
+	client.Subscribe("{{ .Module }}", func(msg messaging.Message) error {
+		fmt.Printf("  📨 {{ .Module }} - %s\n", string(msg.Data))
+		return nil
+	})
+
+	// Wait for the context to be done.
+	select {
+	case <-doneChan:
+		fmt.Println("\n👋 consumer stopped")
+	}
+}
+{{ end }}

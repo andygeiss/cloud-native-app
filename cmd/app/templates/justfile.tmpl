@@ -4,15 +4,15 @@
 build: test
     @go build \
     -ldflags "-s -w" \
-    -o ./bin/$(basename $PWD) ./cmd/service/main.go
+    -o ./bin/service ./cmd/service/main.go
 
 # Generate an encryption key.
 genkey:
     @go run cmd/genkey/main.go
 
-# Run the Go sources.
+# Run the service.
 run: build
-    @./bin/$(basename $PWD)
+    @./bin/service
 
 # Test the Go sources (Units).
 test:

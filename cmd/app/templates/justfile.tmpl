@@ -4,7 +4,7 @@
 build-cli:
     @go build \
     -ldflags "-s -w" \
-    -o ./bin/service ./cmd/service/main.go
+    -o ./bin/cli ./cmd/cli/main.go
 
 # Build the service binary.
 build-service:

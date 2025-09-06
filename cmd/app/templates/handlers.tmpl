@@ -29,7 +29,7 @@ func ViewIndex(cfg *config.Config, engine *templating.Engine, serverSessions *se
 // ProduceMessage defines an HTTP handler function for rendering the message template.
 func ProduceMessage(cfg *config.Config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-	    data := "success"
+	    data := "42!"
 		cfg.Messaging.Publish("{{ .Module }}",
 			messaging.NewMessage(
 				[]byte(data),
@@ -41,7 +41,7 @@ func ProduceMessage(cfg *config.Config) http.HandlerFunc {
 			"message", "{{ .Module }}",
 			"data", data,
 		)
-		w.Write([]byte("Done!"))
+		w.Write([]byte(data))
 	}
 }
 

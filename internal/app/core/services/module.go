@@ -95,8 +95,11 @@ func (a *ModuleService) CreateModule() error {
 	<title> Messaging Demo </title>
 </head>
 <body>
-	<button hx-post="/api/producer" hx-target="#response"> Send Message </button>
-	<div id="response"></div>
+	<main>
+		<img src="https://raw.githubusercontent.com/andygeiss/cloud-native-app/refs/heads/main/logo.png" alt="Logo">
+		<button hx-post="/api/producer" hx-target="#response"> Send Message </button>
+		<div id="response"></div>
+	</main>
 </body>
 </html>
 {{ end }}

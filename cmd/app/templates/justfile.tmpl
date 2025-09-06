@@ -1,7 +1,13 @@
 {{ define "justfile" }}set dotenv-load
 
-# Compile the Go sources.
-build: test
+# Build the CLI binary.
+build-cli:
+    @go build \
+    -ldflags "-s -w" \
+    -o ./bin/service ./cmd/service/main.go
+
+# Build the service binary.
+build-service:
     @go build \
     -ldflags "-s -w" \
     -o ./bin/service ./cmd/service/main.go
@@ -10,8 +16,12 @@ build: test
 genkey:
     @go run cmd/genkey/main.go
 
+# Runt the CLI
+run-cli: build-cli
+    @./bin/cli
+
 # Run the service.
-run: build
+run-service: build-service
     @./bin/service
 
 # Test the Go sources (Units).

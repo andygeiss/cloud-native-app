@@ -92,7 +92,7 @@ func (a *ModuleService) CreateModule() error {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
 	<link rel="stylesheet" href="/assets/styles.css">
-	<title> Kafka Demo </title>
+	<title> Messaging Demo </title>
 </head>
 <body>
 	<button hx-post="/api/producer" hx-target="#response"> Send Message </button>

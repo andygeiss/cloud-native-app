@@ -1,10 +1,9 @@
 {{ define "styles" }}
 :root {
     --color-gray: #a0a0a0;
-    --color-primary: #fefff8;
-    --color-primary-text: #030303;
-    --color-secondary: #1db2d1;
-    --color-tertiary: #0b9ab9;
+    --color-primary: #000000;
+    --color-primary-text: #f5f5f7;
+    --color-secondary: #006edb;
     --font-family: "Helvetica Neue", sans-serif;
     --font-size: 14pt;
 }
@@ -37,28 +36,28 @@ body {
 a,
 button {
     align-items: center;
-    background: var(--color-secondary);
+    background: var(--color-primary-text);
     border: none;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.25rem var(--color-tertiary);
+    border-radius: 980px;
     color: var(--color-primary);
     display: flex;
-    font-weight: bold;
-    height: 32px;
+    font-size: 17px;
+    font-weight: 400;
+    height: 20px;
     justify-content: center;
     margin: 0.5rem;
-    padding: 1rem 0.95rem;
+    padding: 21px 11px;
     position: relative;
     width: fit-content;
 }
 
 a:hover,
 button:hover {
-    box-shadow: 0 0.125rem var(--color-tertiary);
-    top: 0.125rem;
+    background: #fff;
 }
 
-div {
+div,
+main {
     align-items: center;
     display: flex;
     flex-flow: column;

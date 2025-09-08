@@ -1,8 +1,8 @@
-github.com/andygeiss/cloud-native-utils v0.1.73 h1:GIkw+QYKhxVBwHNqr5kyDjnbr2YrTBMCaYNu2gpxcZk=
-github.com/andygeiss/cloud-native-utils v0.1.73/go.mod h1:9N7aVgH6Tzz2lG7Uhsnxr163IBL/EA19tFWeXYraGgk=
+github.com/andygeiss/cloud-native-utils v0.1.78 h1:jo78OeUxndMN4J9QQyxvKAx/xckqpxRRFv33zBf2p0I=
+github.com/andygeiss/cloud-native-utils v0.1.78/go.mod h1:pm3R6wFRk7Id7wvsNX+SUgCZ8QG/8o9oBuCu53mviRo=
 golang.org/x/crypto v0.41.0 h1:WKYxWedPGCTVVl5+WHSSrOBT0O8lx32+zxmHxijgXp4=
 golang.org/x/crypto v0.41.0/go.mod h1:pO5AFd7FA68rFak7rOAGVuygIISepHftHnr8dr6+sUc=
-golang.org/x/net v0.42.0 h1:jzkYrhi3YQWD6MLBJcsklgQsoAcw89EcZbJw8Z614hs=
-golang.org/x/net v0.42.0/go.mod h1:FF1RA5d3u7nAYA4z2TkclSCKh68eSXtiFwcWQpPXdt8=
+golang.org/x/net v0.43.0 h1:lat02VYK2j4aLzMzecihNvTlJNQUq316m2Mr9rnM6YE=
+golang.org/x/net v0.43.0/go.mod h1:vhO1fvI4dGsIjh73sWfUVjj3N7CA9WkKJNQm2svM6Jg=
 golang.org/x/text v0.28.0 h1:rhazDwis8INMIwQ4tpjLDzUhx6RlXqZNPEM0huQojng=
 golang.org/x/text v0.28.0/go.mod h1:U8nCwOR8jO/marOQ0QbDiOngZVEBB7MAiitBuMjXiNU=

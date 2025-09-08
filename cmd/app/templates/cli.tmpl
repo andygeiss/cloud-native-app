@@ -26,9 +26,7 @@ func main() {
 	})
 
 	// Wait for the context to be done.
-	select {
-	case <-doneChan:
-		fmt.Println("\n👋 consumer stopped")
-	}
+	<-doneChan
+	fmt.Println("\n👋 consumer stopped")
 }
 {{ end }}

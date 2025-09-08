@@ -25,6 +25,20 @@ func main() {
 		return nil
 	})
 
+    fmt.Println("🕒 waiting for 5 seconds...")
+	time.Sleep(5 * time.Second)
+
+	// Produce a message to the topic.
+	client.Publish("{{ .Module }}", messaging.NewMessage(
+		[]byte("42!"),
+		messaging.MessageTypeRemote,
+	))
+
+	// Handle errors from the dispatcher.
+	if err := client.Error(); err != nil {
+		fmt.Printf("🚨 error: %v\n", err)
+	}
+
 	// Wait for the context to be done.
 	<-doneChan
 	fmt.Println("\n👋 consumer stopped")

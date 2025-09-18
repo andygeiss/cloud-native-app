@@ -30,12 +30,17 @@ func ViewIndex(cfg *config.Config, engine *templating.Engine, serverSessions *se
 func ProduceMessage(cfg *config.Config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 	    data := "42!"
-		cfg.Messaging.Publish("{{ .Module }}",
-			messaging.NewMessage(
-				[]byte(data),
-				messaging.MessageTypeRemote,
-			),
-		)
+		
+		// Publish the message asynchronously.
+		go func() {
+			cfg.Messaging.Publish(r.Context(),
+				messaging.NewMessage(
+					"{{ .Module }}",
+					[]byte(data),
+				),
+			)
+		}()
+
 		cfg.Logging.Info(
 			"message sent",
 			"message", "{{ .Module }}",

@@ -2,7 +2,6 @@
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/andygeiss/cloud-native-utils/messaging"
 	"github.com/andygeiss/cloud-native-utils/service"
@@ -20,25 +19,23 @@ func main() {
 	fmt.Println("🚀 consumer started")
 
 	// Create a new Kafka dispatcher and subscribe to the topic.
-	client := messaging.NewKafkaDispatcher(ctx)
-	client.Subscribe("{{ .Module }}", func(msg messaging.Message) error {
-		fmt.Printf("  📨 {{ .Module }} - %s\n", string(msg.Data))
-		return nil
-	})
+	client := messaging.NewExternalDispatcher()
 
-    fmt.Println("🕒 waiting for 5 seconds...")
-	time.Sleep(5 * time.Second)
+	// Create a new service function.
+	fn := func(msg messaging.Message) (state messaging.MessageState, err error) {
+		fmt.Printf("  📨 {{ .Module }} - %s\n", string(msg.Data))
+		doneChan <- true
+		return messaging.MessageStateCompleted, nil
+	}
+
+	// Consume a message to the topic via the service function.
+	client.Subscribe(ctx, "{{ .Module }}", service.Wrap(fn))
 
 	// Produce a message to the topic.
-	client.Publish("{{ .Module }}", messaging.NewMessage(
+	_ = client.Publish(ctx, messaging.NewMessage(
+		"{{ .Module }}",
 		[]byte("42!"),
-		messaging.MessageTypeRemote,
 	))
-
-	// Handle errors from the dispatcher.
-	if err := client.Error(); err != nil {
-		fmt.Printf("🚨 error: %v\n", err)
-	}
 
 	// Wait for the context to be done.
 	<-doneChan

@@ -128,7 +128,7 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	os.MkdirAll("internal/app/adapters/api", 0755)
+	os.MkdirAll("internal/app/adapters/ingres/ui", 0755)
 
 	// Get the handlers.go template.
 	handlers, err := a.templatesPort.Get("handlers.go", a.cfg)
@@ -137,7 +137,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the handlers.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/api/handlers.go", handlers, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/handlers.go", handlers, 0644); err != nil {
 		return err
 	}
 
@@ -146,7 +146,7 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	if err := os.WriteFile("internal/app/adapters/api/middleware.go", middleware, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/middleware.go", middleware, 0644); err != nil {
 		return err
 	}
 
@@ -157,7 +157,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the router.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/api/router.go", router, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/router.go", router, 0644); err != nil {
 		return err
 	}
 

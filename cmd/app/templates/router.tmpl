@@ -1,9 +1,10 @@
-{{ define "router.go" }}package api
+{{ define "router.go" }}package ingres
 
 import (
 	"context"
 	"net/http"
 
+    "{{ .Module }}/internal/app/adapters/ingres/ui"
 	"{{ .Module }}/internal/app/config"
 
 	"github.com/andygeiss/cloud-native-utils/security"
@@ -22,10 +23,7 @@ func Route(ctx context.Context, cfg *config.Config) *http.ServeMux {
 	engine.Parse(cfg.Templates)
 
 	// Add the UI endpoints for HTMX.
-	mux.HandleFunc("GET /ui", WithLogging(cfg, ViewIndex(cfg, engine, serverSessions)))
-
-	// Add the API endpoints.
-	mux.HandleFunc("POST /api/producer", WithLogging(cfg, ProduceMessage(cfg)))
+	mux.HandleFunc("GET /ui", WithLogging(cfg, ui.ViewIndex(cfg, engine, serverSessions)))
 
 	return mux
 }

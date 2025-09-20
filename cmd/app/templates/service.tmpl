@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"{{ .Module }}/internal/app/adapters/api"
+	"{{ .Module }}/internal/app/adapters/ingres"
 	"{{ .Module }}/internal/app/config"
 
 	"github.com/andygeiss/cloud-native-utils/messaging"
@@ -33,7 +33,7 @@ func main() {
 	}
 
 	// Create a new service with the configuration.
-	mux := api.Route(ctx, cfg)
+	mux := ingres.Route(ctx, cfg)
 	srv := security.NewServer(mux)
 	defer srv.Close()
 

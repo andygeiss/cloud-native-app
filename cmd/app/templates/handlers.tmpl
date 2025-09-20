@@ -1,11 +1,10 @@
-{{ define "handlers.go" }}package api
+{{ define "handlers.go" }}package ui
 
 import (
 	"net/http"
 
 	"{{ .Module }}/internal/app/config"
 
-	"github.com/andygeiss/cloud-native-utils/messaging"
 	"github.com/andygeiss/cloud-native-utils/security"
 	"github.com/andygeiss/cloud-native-utils/templating"
 )
@@ -20,33 +19,8 @@ func View(engine *templating.Engine, name string, data any) http.HandlerFunc {
 // ViewIndex defines an HTTP handler function for rendering the index template.
 func ViewIndex(cfg *config.Config, engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 	    // Render the template using the provided engine and data.
 		View(engine, "index", nil)(w, r)
-	}
-}
-
-// ProduceMessage defines an HTTP handler function for rendering the message template.
-func ProduceMessage(cfg *config.Config) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-	    data := "42!"
-		
-		// Publish the message asynchronously.
-		go func() {
-			cfg.Messaging.Publish(r.Context(),
-				messaging.NewMessage(
-					"{{ .Module }}",
-					[]byte(data),
-				),
-			)
-		}()
-
-		cfg.Logging.Info(
-			"message sent",
-			"message", "{{ .Module }}",
-			"data", data,
-		)
-		w.Write([]byte(data))
 	}
 }
 

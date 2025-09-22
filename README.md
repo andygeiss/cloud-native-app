@@ -31,8 +31,11 @@ Follow these steps to set up and run the **Cloud Native App**:
 
 1. Install the latest version of [Go](https://golang.org/dl/).
 2. Install the latest version of [Just](https://github.com/casey/just).
+3. Include `$HOME/bin` in your `$PATH`.
 
 ### Installation
+
+Clone the repository and install the `cloud-native-app` binary into `$HOME/bin`:
 
 ```bash
 just install
@@ -40,12 +43,21 @@ just install
 
 ### Usage
 
-```bash
-cloud-native-app <Module>
-```
-
-### Example
+Change to your target directory and create a new demo module:
 
 ```bash
-cloud-native-app github.com/andygeiss/my-new-repo
+cloud-native-app demo
 ```
+
+Navigate into the newly created demo directory and start the HTTP service on port 8080:
+
+```bash
+cd demo
+just run-service
+```
+
+Open the UI in your browser:
+
+[http://localhost:8080/ui](http://localhost:8080/ui])
+
+![alt text](image.png)

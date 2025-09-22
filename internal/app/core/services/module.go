@@ -72,15 +72,6 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	os.MkdirAll("cmd/genkey", 0755)
-
-	// Get the genkey/main.go template.
-	genkey, _ := a.templatesPort.Get("genkey.go", a.cfg)
-
-	if err := os.WriteFile("cmd/genkey/main.go", genkey, 0644); err != nil {
-		return err
-	}
-
 	os.MkdirAll("cmd/service/assets", 0755)
 
 	// Get the index.html template.

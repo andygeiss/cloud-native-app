@@ -76,22 +76,23 @@ func (a *ModuleService) CreateModule() error {
 
 	// Get the index.html template.
 	index := []byte(`{{ define "index" }}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
-	<link rel="stylesheet" href="/assets/styles.css">
-	<title> Messaging Demo </title>
-</head>
-<body>
-	<main>
-		<img src="https://raw.githubusercontent.com/andygeiss/cloud-native-app/refs/heads/main/logo.png" alt="Logo">
-		<button hx-post="/api/producer" hx-target="#response"> Send Message </button>
-		<div id="response"></div>
-	</main>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/assets/styles.css" />
+        <title>Demo</title>
+    </head>
+    <body>
+        <main>
+            {{ if .SessionID }}
+            <a href="/auth/logout"> Logout </a>
+            {{ else }}
+            <a href="/auth/login"> Login </a>
+            {{ end }}
+        </main>
+    </body>
 </html>
 {{ end }}
 `)

@@ -19,8 +19,15 @@ func View(engine *templating.Engine, name string, data any) http.HandlerFunc {
 // ViewIndex defines an HTTP handler function for rendering the index template.
 func ViewIndex(cfg *config.Config, engine *templating.Engine, serverSessions *security.ServerSessions) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-	    // Render the template using the provided engine and data.
-		View(engine, "index", nil)(w, r)
+	    // Initialize the view data.
+		data := &struct {
+			SessionID string
+		}{
+			SessionID: r.URL.Query().Get("session_id"),
+		}
+
+		// Render the template using the provided engine and data.
+		View(engine, "index", data)(w, r)
 	}
 }
 

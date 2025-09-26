@@ -140,15 +140,6 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	middleware, err := a.templatesPort.Get("middleware.go", a.cfg)
-	if err != nil {
-		return err
-	}
-
-	if err := os.WriteFile("internal/app/adapters/ingres/middleware.go", middleware, 0644); err != nil {
-		return err
-	}
-
 	// Get the router.go template.
 	router, err := a.templatesPort.Get("router.go", a.cfg)
 	if err != nil {

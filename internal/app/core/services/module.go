@@ -86,7 +86,14 @@ func (a *ModuleService) CreateModule() error {
     </head>
     <body>
         <main>
-            {{ if .SessionID }}
+			{{ if .SessionID }}
+            <h1>Welcome!</h1>
+            <p>Email {{ .Email }}!</p>
+            <p>Issuer {{ .Issuer }}!</p>
+            <p>Name {{ .Name }}!</p>
+            <p>SessionID {{ .SessionID }}!</p>
+            <p>Subject {{ .Subject }}!</p>
+            <p>Verified {{ .Verified }}!</p>
             <a href="/auth/logout"> Logout </a>
             {{ else }}
             <a href="/auth/login"> Login </a>

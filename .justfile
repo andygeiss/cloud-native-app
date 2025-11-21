@@ -11,7 +11,7 @@ install: build
     @cp ./bin/$(basename $PWD) $HOME/bin/$(basename $PWD)
 
 # Run the Go sources.
-run:
+run: build
     @./bin/$(basename $PWD)
 
 # Test the Go sources (Units).

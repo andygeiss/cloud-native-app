@@ -56,6 +56,35 @@ cd demo
 just run-service
 ```
 
+### Start Kafka and Keycloak
+
+Start Kafka and Keycloak on your local machine by running the following commands:
+
+```bash
+podman run --restart=always --name keycloak -d -p 127.0.0.1:8180:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.3.4 start-dev
+podman run  --restart=always --name kafka -d --p 127.0.0.1:9092:9092 apache/kafka:latest
+```
+
+### Setup Keycloak
+
+We need to configure Keycloak to work with our application. Follow these steps:
+
+1. Open the Keycloak admin console in your browser: [http://localhost:8180/auth/admin](http://localhost:8180/auth/admin)
+2. Log in with the admin credentials you provided during the Keycloak setup.
+3. Create a new realm `local` for your application.
+4. Create a new client `demo` for your application.
+5. Configure the client to use the appropriate authentication flow and scopes.
+6. Create new credentials (`client_id`, `client_secret`) for the client.
+7. Create a new user `test` with name `test test` for your application.
+8. Replace the OIDC configuration to use the credentials from Keycloak.
+
+```env
+OIDC_CLIENT_ID="demo"
+OIDC_CLIENT_SECRET="8d6Gb5ZDNY2qlvFxCRNmPh3gozKtidRQ"
+```
+
+### Visit the UI
+
 Open the UI in your browser:
 
 [http://localhost:8080/ui](http://localhost:8080/ui])

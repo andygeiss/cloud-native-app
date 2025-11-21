@@ -1,5 +1,7 @@
 github.com/andygeiss/cloud-native-utils v0.2.11 h1:Y+AEf/Mfx0SBQBMPzHK6qzAscQTWzh6l/+Nm6fbHT3Q=
 github.com/andygeiss/cloud-native-utils v0.2.11/go.mod h1:5jXnNw4XuiFK5rea6FNoxMAYWA6n51fM/WHmLYqPzIQ=
+github.com/andygeiss/cloud-native-utils v0.2.12 h1:f+vNz4TE9AqNURDRm4GTJLipE7zRQbIa3wc3Xvwq6L4=
+github.com/andygeiss/cloud-native-utils v0.2.12/go.mod h1:tBQl1eiRaTL4s6ixPYrQhu3gqRsBrvqdaVaV6zSJNLE=
 github.com/coreos/go-oidc/v3 v3.17.0 h1:hWBGaQfbi0iVviX4ibC7bk8OKT5qNr4klBaCHVNvehc=
 github.com/coreos/go-oidc/v3 v3.17.0/go.mod h1:wqPbKFrVnE90vty060SB40FCJ8fTHTxSwyXJqZH+sI8=
 github.com/go-jose/go-jose/v4 v4.1.3 h1:CVLmWDhDVRa6Mi/IgCgaopNosCaHz7zrMeF9MlZRkrs=

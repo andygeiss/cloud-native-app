@@ -62,7 +62,7 @@ Start Kafka and Keycloak on your local machine by running the following commands
 
 ```bash
 podman run --restart=always --name keycloak -d -p 127.0.0.1:8180:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.3.4 start-dev
-podman run  --restart=always --name kafka -d --p 127.0.0.1:9092:9092 apache/kafka:latest
+podman run  --restart=always --name kafka -d -p 127.0.0.1:9092:9092 apache/kafka:latest
 ```
 
 ### Setup Keycloak

@@ -73,10 +73,12 @@ We need to configure Keycloak to work with our application. Follow these steps:
 2. Log in with the admin credentials you provided during the Keycloak setup.
 3. Create a new realm `local` for your application.
 4. Create a new client `demo` for your application.
-5. Configure the client to use the appropriate authentication flow and scopes.
-6. Create new credentials (`client_id`, `client_secret`) for the client.
-7. Create a new user `test` with name `test test` for your application.
-8. Replace the OIDC configuration to use the credentials from Keycloak.
+5. Set the redirect URI to `http://localhost:8080/auth/callback`.
+6. Configure the client to use the appropriate authentication flow and scopes.
+7. Create new credentials (`client_id`, `client_secret`) for the client.
+8. Create a new user `test` with name `test test` for your application.
+9. Create a password for the user `test`.
+10. Replace the OIDC configuration to use the credentials from Keycloak.
 
 ```env
 OIDC_CLIENT_ID="demo"

@@ -1,0 +1,19 @@
+{{ define "login.go" }}package ui
+
+import (
+	"net/http"
+
+	"{{ .Module }}/internal/app/config"
+
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/templating"
+)
+
+// ViewLogin defines an HTTP handler function for rendering the login template.
+func ViewLogin(cfg *config.Config) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		View(cfg, "login", nil)(w, r)
+	}
+}
+
+{{ end }}

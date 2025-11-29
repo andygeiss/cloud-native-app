@@ -1,4 +1,4 @@
-{{ define "handlers.go" }}package ui
+{{ define "index.go" }}package ui
 
 import (
 	"net/http"
@@ -8,13 +8,6 @@ import (
 	"github.com/andygeiss/cloud-native-utils/security"
 	"github.com/andygeiss/cloud-native-utils/templating"
 )
-
-// View defines an HTTP handler function for rendering a template with data.
-func View(engine *templating.Engine, name string, data any) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		engine.Render(w, name, data)
-	}
-}
 
 // ViewIndexData specifies the view data.
 type ViewIndexData struct {
@@ -27,7 +20,7 @@ type ViewIndexData struct {
 }
 
 // ViewIndex defines an HTTP handler function for rendering the index template.
-func ViewIndex(cfg *config.Config, engine *templating.Engine, sessions *security.ServerSessions) http.HandlerFunc {
+func ViewIndex(cfg *config.Config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Make a shortcut for the current context.
 		ctx := r.Context()
@@ -43,7 +36,7 @@ func ViewIndex(cfg *config.Config, engine *templating.Engine, sessions *security
 		}
 
 		// Render the template using the provided engine and data.
-		View(engine, "index", data)(w, r)
+		View(cfg, "index", data)(w, r)
 	}
 }
 

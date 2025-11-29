@@ -1,18 +1,25 @@
-{{ define "middleware.go" }}package api
+{{ define "middleware.go" }}package ingres
 
 import (
-	"log"
 	"net/http"
 	"time"
+
+	"{{ .Module }}/internal/app/config"
 )
 
 // WithLogging logs the request with method, path and duration.
-func WithLogging(next http.HandlerFunc) http.HandlerFunc {
+func WithLogging(cfg *config.Config, next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Log the request with method, path and duration.
 		start := time.Now()
 		next(w, r)
-		log.Printf("⌛ %s %s %v", r.Method, r.RequestURI, time.Since(start))
+
+		// Log the request with method, path and duration.
+		cfg.Logging.Info(
+			"http request handled",
+			"method", r.Method,
+			"path", r.RequestURI,
+			"duration", time.Since(start),
+		)
 	}
 }
 {{ end }}

@@ -1,18 +1,28 @@
 {{ define "justfile" }}set dotenv-load
 
-# Compile the Go sources.
-build: test
+# Build the CLI binary.
+build-cli:
     @go build \
     -ldflags "-s -w" \
-    -o ./bin/$(basename $PWD) ./cmd/service/main.go
+    -o ./bin/cli ./cmd/cli/main.go
+
+# Build the service binary.
+build-service:
+    @go build \
+    -ldflags "-s -w" \
+    -o ./bin/service ./cmd/service/main.go
 
 # Generate an encryption key.
 genkey:
     @go run cmd/genkey/main.go
 
-# Run the Go sources.
-run: build
-    @./bin/$(basename $PWD)
+# Runt the CLI
+run-cli: build-cli
+    @./bin/cli
+
+# Run the service.
+run-service: build-service
+    @./bin/service
 
 # Test the Go sources (Units).
 test:

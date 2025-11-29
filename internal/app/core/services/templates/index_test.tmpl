@@ -1,0 +1,40 @@
+{{ define "index_test.go" }}package ui_test
+
+import (
+	"context"
+	"{{ .Module }}/internal/app/adapters/ingres/ui"
+	"{{ .Module }}/internal/app/config"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/andygeiss/cloud-native-utils/assert"
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/templating"
+)
+
+func TestIndexHandler_Should_Render_Index_Page(t *testing.T) {
+	// Arrange
+	te := templating.NewEngine(efs)
+	te.Parse("testdata/*.html")
+	cfg := &config.Config{Templating: te}
+	engine := templating.NewEngine(efs)
+	engine.Parse("testdata/*.html")
+	r, _ := http.NewRequest("GET", "/ui", nil)
+	w := httptest.NewRecorder()
+
+	ctx := context.Background()
+	ctx = context.WithValue(ctx, security.ContextEmail, "test@test.com")
+	ctx = context.WithValue(ctx, security.ContextIssuer, "http://localhost:8180/realms/local")
+	ctx = context.WithValue(ctx, security.ContextName, "test test")
+	ctx = context.WithValue(ctx, security.ContextSessionID, "c420f7e6a3a489f3d1005a111bc1ef27")
+	ctx = context.WithValue(ctx, security.ContextSubject, "2c815549-0d5f-49a2-89b2-f69e8a51883e")
+	ctx = context.WithValue(ctx, security.ContextVerified, false)
+
+	// Act
+	ui.ViewIndex(cfg)(w, r.WithContext(ctx))
+
+	// Assert
+	assert.That(t, "status code must be 200", w.Code, http.StatusOK)
+}
+{{ end }}

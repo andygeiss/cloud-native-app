@@ -82,22 +82,18 @@ func (a *ModuleService) CreateModule() error {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/assets/styles.css" />
-        <title>Demo</title>
+        <title> Title </title>
     </head>
     <body>
         <main>
-			{{ if .SessionID }}
-            <h1>Welcome!</h1>
-            <p>Email {{ .Email }}</p>
-            <p>Issuer {{ .Issuer }}</p>
-            <p>Name {{ .Name }}</p>
-            <p>SessionID {{ .SessionID }}</p>
-            <p>Subject {{ .Subject }}</p>
-            <p>Verified {{ .Verified }}</p>
-            <a href="/auth/logout"> Logout </a>
-            {{ else }}
-            <a href="/auth/login"> Login </a>
-            {{ end }}
+	        <h1>Welcome!</h1>
+	        <p>Email {{ .Email }}</p>
+	        <p>Issuer {{ .Issuer }}</p>
+	        <p>Name {{ .Name }}</p>
+	        <p>SessionID {{ .SessionID }}</p>
+	        <p>Subject {{ .Subject }}</p>
+	        <p>Verified {{ .Verified }}</p>
+	        <a href="/auth/logout"> Logout </a>
         </main>
     </body>
 </html>
@@ -106,6 +102,30 @@ func (a *ModuleService) CreateModule() error {
 
 	// Write the index.html to the module directory.
 	if err := os.WriteFile("cmd/service/assets/index.html", index, 0644); err != nil {
+		return err
+	}
+
+	// Get the login.html template.
+	login := []byte(`{{ define "login" }}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/assets/styles.css" />
+        <title> Title </title>
+    </head>
+    <body>
+        <main>
+        	<a href="/auth/login"> Login </a>
+        </main>
+    </body>
+</html>
+{{ end }}
+`)
+
+	// Write the login.html to the module directory.
+	if err := os.WriteFile("cmd/service/assets/login.html", login, 0644); err != nil {
 		return err
 	}
 
@@ -129,14 +149,47 @@ func (a *ModuleService) CreateModule() error {
 
 	os.MkdirAll("internal/app/adapters/ingres/ui", 0755)
 
-	// Get the handlers.go template.
-	handlers, err := a.templatesPort.Get("handlers.go", a.cfg)
+	// Get the index.go template.
+	index_go, err := a.templatesPort.Get("index.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the handlers.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/handlers.go", handlers, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/index.go", index_go, 0644); err != nil {
+		return err
+	}
+
+	// Get the index_test.go template.
+	index_test_go, err := a.templatesPort.Get("index_test.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the handlers.go to the module directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/index_test.go", index_test_go, 0644); err != nil {
+		return err
+	}
+
+	// Get the login.go template.
+	login_go, err := a.templatesPort.Get("login.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the login.go to the module directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/login.go", login_go, 0644); err != nil {
+		return err
+	}
+
+	// Get the login_test.go template.
+	login_test_go, err := a.templatesPort.Get("login_test.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the login_test.go to the module directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/login_test.go", login_test_go, 0644); err != nil {
 		return err
 	}
 
@@ -148,6 +201,25 @@ func (a *ModuleService) CreateModule() error {
 
 	// Write the router.go to the module directory.
 	if err := os.WriteFile("internal/app/adapters/ingres/router.go", router, 0644); err != nil {
+		return err
+	}
+
+	os.MkdirAll("internal/app/adapters/ingres/testdata", 0755)
+	os.MkdirAll("internal/app/adapters/ingres/ui/testdata", 0755)
+
+	// Write the index.html to the testdata directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/testdata/index.html", index, 0644); err != nil {
+		return err
+	}
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/index.html", index, 0644); err != nil {
+		return err
+	}
+
+	// Write the login.html to the testdata directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/testdata/login.html", login, 0644); err != nil {
+		return err
+	}
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/login.html", login, 0644); err != nil {
 		return err
 	}
 

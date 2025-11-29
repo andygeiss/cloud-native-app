@@ -1,13 +1,14 @@
-{{ define "router.go" }}package api
+{{ define "router.go" }}package ingres
 
 import (
 	"context"
 	"net/http"
 
+    "{{ .Module }}/internal/app/adapters/ingres/ui"
 	"{{ .Module }}/internal/app/config"
 
+	"github.com/andygeiss/cloud-native-utils/logging"
 	"github.com/andygeiss/cloud-native-utils/security"
-	"github.com/andygeiss/cloud-native-utils/templating"
 )
 
 // Route creates a new mux with the liveness and readiness probe (/liveness, /readiness),
@@ -17,12 +18,17 @@ func Route(ctx context.Context, cfg *config.Config) *http.ServeMux {
 	// Embed the assets into the mux.
 	mux, serverSessions := security.NewServeMux(ctx, cfg.Efs)
 
-	// Create a new templating engine and parse the templates.
-	engine := templating.NewEngine(cfg.Efs)
-	engine.Parse(cfg.Templates)
+	// Make the server sessions available to the config.
+	cfg.ServerSessions = serverSessions
 
-	// Add the UI endpoints for HTMX.
-	mux.HandleFunc("GET /ui", ViewIndex(engine, serverSessions))
+	// Add the index endpoint.
+	mux.HandleFunc("GET /ui", logging.WithLogging(cfg.Logging,
+		security.WithAuth(serverSessions, ui.ViewIndex(cfg))))
+
+	// Add the login endpoint.
+	mux.HandleFunc("GET /ui/login", logging.WithLogging(cfg.Logging,
+		ui.ViewLogin(cfg)))
+
 	return mux
 }
 {{ end }}

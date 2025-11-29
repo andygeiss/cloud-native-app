@@ -1,0 +1,19 @@
+{{ define "handlers.go" }}package ui
+
+import (
+	"net/http"
+
+	"{{ .Module }}/internal/app/config"
+
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/templating"
+)
+
+// View defines an HTTP handler function for rendering a template with data.
+func View(cfg *config.Config, name string, data any) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		cfg.Templating.Render(w, name, data)
+	}
+}
+
+{{ end }}

@@ -20,7 +20,7 @@ var efs embed.FS
 func TestRouter_ViewIndex_Should_Redirect_To_Login(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
-	te.Parse("testdata/*.html")
+	te.Parse("testdata/*.tmpl")
 	cfg := &config.Config{
 		Logging:    logging.NewJsonLogger(),
 		Templating: te,
@@ -40,7 +40,7 @@ func TestRouter_ViewIndex_Should_Redirect_To_Login(t *testing.T) {
 func TestRouter_ViewLogin_Should_Render_Login_Page(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
-	te.Parse("testdata/*.html")
+	te.Parse("testdata/*.tmpl")
 	cfg := &config.Config{
 		Logging:    logging.NewJsonLogger(),
 		Templating: te,

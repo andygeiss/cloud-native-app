@@ -16,10 +16,8 @@ import (
 func TestIndexHandler_Should_Render_Index_Page(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
-	te.Parse("testdata/*.html")
+	te.Parse("testdata/*.tmpl")
 	cfg := &config.Config{Templating: te}
-	engine := templating.NewEngine(efs)
-	engine.Parse("testdata/*.html")
 	r, _ := http.NewRequest("GET", "/ui", nil)
 	w := httptest.NewRecorder()
 

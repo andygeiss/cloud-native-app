@@ -155,7 +155,7 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	// Write the handlers.go to the module directory.
+	// Write the index.go to the module directory.
 	if err := os.WriteFile("internal/app/adapters/ingres/ui/index.go", index_go, 0644); err != nil {
 		return err
 	}
@@ -166,7 +166,7 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	// Write the handlers.go to the module directory.
+	// Write the index_test.go to the module directory.
 	if err := os.WriteFile("internal/app/adapters/ingres/ui/index_test.go", index_test_go, 0644); err != nil {
 		return err
 	}
@@ -190,6 +190,28 @@ func (a *ModuleService) CreateModule() error {
 
 	// Write the login_test.go to the module directory.
 	if err := os.WriteFile("internal/app/adapters/ingres/ui/login_test.go", login_test_go, 0644); err != nil {
+		return err
+	}
+
+	// Get the view.go template.
+	view_go, err := a.templatesPort.Get("view.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the view.go to the module directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/view.go", view_go, 0644); err != nil {
+		return err
+	}
+
+	// Get the view_test.go template.
+	view_test_go, err := a.templatesPort.Get("view_test.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the view_test.go to the module directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/view_test.go", view_test_go, 0644); err != nil {
 		return err
 	}
 

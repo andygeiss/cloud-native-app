@@ -27,7 +27,7 @@ func main() {
 
 	// Initialize the templating engine with the embedded file system.
 	te := templating.NewEngine(efs)
-	te.Parse("assets/*.html")
+	te.Parse("assets/*.tmpl")
 
 	// Create a new configuration with the embedded file system.
 	cfg := &config.Config{

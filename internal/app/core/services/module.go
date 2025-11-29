@@ -101,7 +101,7 @@ func (a *ModuleService) CreateModule() error {
 `)
 
 	// Write the index.html to the module directory.
-	if err := os.WriteFile("cmd/service/assets/index.html", index, 0644); err != nil {
+	if err := os.WriteFile("cmd/service/assets/index.tmpl", index, 0644); err != nil {
 		return err
 	}
 
@@ -125,7 +125,7 @@ func (a *ModuleService) CreateModule() error {
 `)
 
 	// Write the login.html to the module directory.
-	if err := os.WriteFile("cmd/service/assets/login.html", login, 0644); err != nil {
+	if err := os.WriteFile("cmd/service/assets/login.tmpl", login, 0644); err != nil {
 		return err
 	}
 
@@ -241,18 +241,18 @@ func (a *ModuleService) CreateModule() error {
 	os.MkdirAll("internal/app/adapters/ingres/ui/testdata", 0755)
 
 	// Write the index.html to the testdata directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/testdata/index.html", index, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/testdata/index.tmpl", index, 0644); err != nil {
 		return err
 	}
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/index.html", index, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/index.tmpl", index, 0644); err != nil {
 		return err
 	}
 
 	// Write the login.html to the testdata directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/testdata/login.html", login, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/testdata/login.tmpl", login, 0644); err != nil {
 		return err
 	}
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/login.html", login, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/login.tmpl", login, 0644); err != nil {
 		return err
 	}
 

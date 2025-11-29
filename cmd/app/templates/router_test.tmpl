@@ -1,0 +1,61 @@
+{{ define "router_test.go" }}package ingres_test
+
+import (
+	"context"
+	"embed"
+	"{{ .Module }}/internal/app/adapters/ingres"
+	"{{ .Module }}/internal/app/config"
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/andygeiss/cloud-native-utils/assert"
+	"github.com/andygeiss/cloud-native-utils/logging"
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/templating"
+)
+
+//go:embed testdata
+var efs embed.FS
+
+func TestRouter_ViewIndex_Should_Redirect_To_Login(t *testing.T) {
+	// Arrange
+	te := templating.NewEngine(efs)
+	te.Parse("testdata/*.html")
+	cfg := &config.Config{
+		Logging:    logging.NewJsonLogger(),
+		Templating: te,
+	}
+	ctx := context.Background()
+	mux := ingres.Route(ctx, cfg)
+	r, _ := http.NewRequest("GET", "/ui", nil)
+	w := httptest.NewRecorder()
+
+	// Act
+	mux.ServeHTTP(w, r)
+
+	// Assert
+	assert.That(t, "status code must be 302", w.Code, http.StatusFound)
+}
+
+func TestRouter_ViewLogin_Should_Render_Login_Page(t *testing.T) {
+	// Arrange
+	te := templating.NewEngine(efs)
+	te.Parse("testdata/*.html")
+	cfg := &config.Config{
+		Logging:    logging.NewJsonLogger(),
+		Templating: te,
+	}
+	ctx := context.Background()
+	mux := ingres.Route(ctx, cfg)
+	r, _ := http.NewRequest("GET", "/ui/login", nil)
+	w := httptest.NewRecorder()
+
+	// Act
+	mux.ServeHTTP(w, r)
+
+	// Assert
+	assert.That(t, "status code must be 200", w.Code, http.StatusOK)
+}
+
+{{ end }}

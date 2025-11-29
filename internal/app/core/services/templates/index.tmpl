@@ -24,6 +24,13 @@ func ViewIndex(cfg *config.Config) http.HandlerFunc {
 		// Make a shortcut for the current context.
 		ctx := r.Context()
 
+        // Check if the user is authenticated.
+		if ctx.Value(security.ContextSessionID) == nil ||
+			ctx.Value(security.ContextSessionID).(string) == "" {
+			http.Redirect(w, r, "/ui/login", http.StatusFound)
+			return
+		}
+
 		// Add session-specific data.
 		data := ViewIndexData{
 			Email:     ctx.Value(security.ContextEmail).(string),

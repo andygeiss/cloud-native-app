@@ -226,6 +226,17 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
+	// Get the router_test.go template.
+	router_test, err := a.templatesPort.Get("router_test.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the router_test.go to the module directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/router_test.go", router_test, 0644); err != nil {
+		return err
+	}
+
 	os.MkdirAll("internal/app/adapters/ingres/testdata", 0755)
 	os.MkdirAll("internal/app/adapters/ingres/ui/testdata", 0755)
 

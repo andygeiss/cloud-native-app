@@ -5,13 +5,16 @@ import (
 	"log/slog"
 
 	"github.com/andygeiss/cloud-native-utils/messaging"
+	"github.com/andygeiss/cloud-native-utils/security"
+	"github.com/andygeiss/cloud-native-utils/templating"
 )
 
-// Config is the configuration for the application.
+// Config is the configuration for the service.
 type Config struct {
-	Efs       embed.FS             `json:"-"`
-	Logging   *slog.Logger         `json:"-"`
-	Messaging messaging.Dispatcher `json:"-"`
-	Templates string               `json:"templates"`
+	Efs            embed.FS                 `json:"-"`
+	Logging        *slog.Logger             `json:"-"`
+	Messaging      messaging.Dispatcher     `json:"-"`
+	ServerSessions *security.ServerSessions `json:"-"`
+	Templating     *templating.Engine       `json:"-"`
 }
 {{ end }}

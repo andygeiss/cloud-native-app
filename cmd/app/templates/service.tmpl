@@ -14,6 +14,7 @@ import (
 	"github.com/andygeiss/cloud-native-utils/messaging"
 	"github.com/andygeiss/cloud-native-utils/security"
 	"github.com/andygeiss/cloud-native-utils/service"
+	"github.com/andygeiss/cloud-native-utils/templating"
 )
 
 //go:embed assets
@@ -24,12 +25,15 @@ func main() {
 	ctx, cancel := service.Context()
 	defer cancel()
 
+	// Initialize the templating engine with the embedded file system.
+	te := templating.NewEngine(efs)
+	te.Parse("assets/*.html")
+
 	// Create a new configuration with the embedded file system.
 	cfg := &config.Config{
-		Efs:       efs,
-		Logging:   logging.NewJsonLogger(),
-		Messaging: messaging.NewExternalDispatcher(),
-		Templates: "assets/*.html",
+		Logging:    logging.NewJsonLogger(),
+		Messaging:  messaging.NewExternalDispatcher(),
+		Templating: te,
 	}
 
 	// Create a new service with the configuration.

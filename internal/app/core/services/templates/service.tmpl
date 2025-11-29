@@ -31,6 +31,7 @@ func main() {
 
 	// Create a new configuration with the embedded file system.
 	cfg := &config.Config{
+		Efs:        efs,
 		Logging:    logging.NewJsonLogger(),
 		Messaging:  messaging.NewExternalDispatcher(),
 		Templating: te,

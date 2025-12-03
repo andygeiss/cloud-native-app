@@ -11,7 +11,7 @@ import (
 	"github.com/andygeiss/cloud-native-utils/templating"
 )
 
-func TestIndexHandler_Should_Redirect_To_Login(t *testing.T) {
+func Test_IndexHandler_Should_Redirect_To_Login(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
 	te.Parse("testdata/*.tmpl")

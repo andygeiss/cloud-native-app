@@ -13,7 +13,7 @@ import (
 	"github.com/andygeiss/cloud-native-utils/templating"
 )
 
-func TestIndexHandler_Should_Render_Index_Page(t *testing.T) {
+func Test_IndexHandler_Should_Render_Index_Page(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
 	te.Parse("testdata/*.tmpl")

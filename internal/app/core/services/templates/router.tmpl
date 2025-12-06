@@ -3,6 +3,7 @@
 import (
 	"context"
 	"net/http"
+	_ "net/http/pprof"
 
     "{{ .Module }}/internal/app/adapters/ingres/ui"
 	"{{ .Module }}/internal/app/config"
@@ -20,6 +21,9 @@ func Route(ctx context.Context, cfg *config.Config) *http.ServeMux {
 
 	// Make the server sessions available to the config.
 	cfg.ServerSessions = serverSessions
+
+	// Add the pprof endpoint.
+	mux.HandleFunc("GET /debug/pprof/", http.DefaultServeMux.ServeHTTP)
 
 	// Add the index endpoint.
 	mux.HandleFunc("GET /ui", logging.WithLogging(cfg.Logging,

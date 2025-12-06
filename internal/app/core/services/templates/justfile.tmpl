@@ -1,27 +1,22 @@
 {{ define "justfile" }}set dotenv-load
 
-# Build the CLI binary.
-build-cli:
+# Build the service binary by using Profile-Guided Optimization (PGO).
+build:
+    @touch .cpuprofile.out
     @go build \
     -ldflags "-s -w" \
-    -o ./bin/cli ./cmd/cli/main.go
-
-# Build the service binary.
-build-service:
-    @go build \
-    -ldflags "-s -w" \
+    -pgo .cpuprofile.out \
     -o ./bin/service ./cmd/service/main.go
 
-# Generate an encryption key.
-genkey:
-    @go run cmd/genkey/main.go
-
-# Runt the CLI
-run-cli: build-cli
-    @./bin/cli
+# Profile the service and generate a CPU profile.
+# Switch to another route to make the profile more representative.
+profile:
+    @go install github.com/tsliwowicz/go-wrk@latest
+    @curl -o .cpuprofile.out "http://localhost:$PORT/debug/pprof/profile?seconds=30" &
+    @go-wrk -c 100 -d 30 http://localhost:$PORT/static/styles.css
 
 # Run the service.
-run-service: build-service
+run: build
     @./bin/service
 
 # Test the Go sources (Units).

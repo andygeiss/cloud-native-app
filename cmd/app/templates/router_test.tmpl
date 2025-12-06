@@ -17,6 +17,26 @@ import (
 //go:embed testdata
 var efs embed.FS
 
+func Test_Router_Serve_Profile(t *testing.T) {
+	// Arrange
+	te := templating.NewEngine(efs)
+	te.Parse("testdata/*.tmpl")
+	cfg := &config.Config{
+		Logging:    logging.NewJsonLogger(),
+		Templating: te,
+	}
+	ctx := context.Background()
+	mux := ingres.Route(ctx, cfg)
+	r, _ := http.NewRequest("GET", "/debug/pprof/", nil)
+	w := httptest.NewRecorder()
+
+	// Act
+	mux.ServeHTTP(w, r)
+
+	// Assert
+	assert.That(t, "status code must be 200", w.Code, http.StatusOK)
+}
+
 func Test_Router_ViewIndex_Should_Redirect_To_Login(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)

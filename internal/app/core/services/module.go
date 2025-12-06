@@ -65,13 +65,6 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	os.MkdirAll("cmd/cli", 0755)
-
-	cli, _ := a.templatesPort.Get("cli", a.cfg)
-	if err := os.WriteFile("cmd/cli/main.go", cli, 0644); err != nil {
-		return err
-	}
-
 	os.MkdirAll("cmd/service/assets/static", 0755)
 	os.MkdirAll("cmd/service/assets/templates", 0755)
 

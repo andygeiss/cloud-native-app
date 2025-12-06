@@ -72,7 +72,8 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	os.MkdirAll("cmd/service/static", 0755)
+	os.MkdirAll("cmd/service/assets/static", 0755)
+	os.MkdirAll("cmd/service/assets/templates", 0755)
 
 	// Get the index.html template.
 	index := []byte(`{{ define "index" }}
@@ -101,7 +102,7 @@ func (a *ModuleService) CreateModule() error {
 `)
 
 	// Write the index.html to the module directory.
-	if err := os.WriteFile("cmd/service/static/index.tmpl", index, 0644); err != nil {
+	if err := os.WriteFile("cmd/service/assets/templates/index.tmpl", index, 0644); err != nil {
 		return err
 	}
 
@@ -125,14 +126,14 @@ func (a *ModuleService) CreateModule() error {
 `)
 
 	// Write the login.html to the module directory.
-	if err := os.WriteFile("cmd/service/static/login.tmpl", login, 0644); err != nil {
+	if err := os.WriteFile("cmd/service/assets/templates/login.tmpl", login, 0644); err != nil {
 		return err
 	}
 
 	// Write the styles.css.
 	styles, _ := a.templatesPort.Get("styles", a.cfg)
 
-	if err := os.WriteFile("cmd/service/static/styles.css", styles, 0644); err != nil {
+	if err := os.WriteFile("cmd/service/assets/static/styles.css", styles, 0644); err != nil {
 		return err
 	}
 

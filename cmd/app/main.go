@@ -4,6 +4,7 @@ import (
 	"embed"
 	"encoding/hex"
 	"os"
+	"path/filepath"
 
 	"github.com/andygeiss/cloud-native-app/internal/app/adapters/outbound"
 	"github.com/andygeiss/cloud-native-app/internal/app/config"
@@ -27,6 +28,7 @@ func main() {
 		Efs:       efs,
 		Key:       hex.EncodeToString(key[:]),
 		Module:    module,
+		Name:      filepath.Base(module),
 		Templates: "templates/*",
 	}
 	cfg.TemplatesPort = outbound.NewTemplatesAdapter(cfg)

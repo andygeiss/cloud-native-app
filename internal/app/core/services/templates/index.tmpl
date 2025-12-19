@@ -5,16 +5,19 @@ import (
 
 	"{{ .Module }}/internal/app/config"
 
+	"github.com/andygeiss/cloud-native-utils/redirecting"
 	"github.com/andygeiss/cloud-native-utils/security"
 )
 
 // ViewIndexData specifies the view data.
 type ViewIndexData struct {
+	AppName   string
 	Email     string
 	Issuer    string
 	Name      string
 	SessionID string
 	Subject   string
+	Title     string
 	Verified  bool
 }
 
@@ -24,20 +27,22 @@ func ViewIndex(cfg *config.Config) http.HandlerFunc {
 		// Make a shortcut for the current context.
 		ctx := r.Context()
 
-        // Check if the user is authenticated.
+		// Check if the user is authenticated.
 		if ctx.Value(security.ContextSessionID) == nil ||
 			ctx.Value(security.ContextSessionID).(string) == "" {
-			http.Redirect(w, r, "/ui/login", http.StatusFound)
+			redirecting.Redirect(w, r, "/ui/login")
 			return
 		}
 
 		// Add session-specific data.
 		data := ViewIndexData{
+			AppName:   "{{ .Name }}",
 			Email:     ctx.Value(security.ContextEmail).(string),
 			Issuer:    ctx.Value(security.ContextIssuer).(string),
 			Name:      ctx.Value(security.ContextName).(string),
 			SessionID: ctx.Value(security.ContextSessionID).(string),
 			Subject:   ctx.Value(security.ContextSubject).(string),
+			Title:     "Home",
 			Verified:  ctx.Value(security.ContextVerified).(bool),
 		}
 

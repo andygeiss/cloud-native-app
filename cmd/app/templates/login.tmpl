@@ -6,10 +6,20 @@ import (
 	"{{ .Module }}/internal/app/config"
 )
 
+// ViewLoginData specifies the view data.
+type ViewLoginData struct {
+	AppName string
+	Title   string
+}
+
 // ViewLogin defines an HTTP handler function for rendering the login template.
 func ViewLogin(cfg *config.Config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		View(cfg, "login", nil)(w, r)
+		data := ViewLoginData{
+			AppName: "{{ .Name }}",
+			Title:   "Login",
+		}
+		View(cfg, "login", data)(w, r)
 	}
 }
 

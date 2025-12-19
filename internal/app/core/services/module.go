@@ -32,13 +32,13 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	// Get the gitignore template.
+	// Get the env template.
 	env, err := a.templatesPort.Get("env", a.cfg)
 	if err != nil {
 		return err
 	}
 
-	// Write the gitignore to the module directory.
+	// Write the env to the module directory.
 	if err := os.WriteFile(".env", env, 0644); err != nil {
 		return err
 	}
@@ -65,68 +65,72 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
+	// Get the readme template.
+	readme, err := a.templatesPort.Get("readme.md", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the README.md to the module directory.
+	if err := os.WriteFile("README.md", readme, 0644); err != nil {
+		return err
+	}
+
 	os.MkdirAll("cmd/service/assets/static", 0755)
 	os.MkdirAll("cmd/service/assets/templates", 0755)
 
-	// Get the index.html template.
-	index := []byte(`{{ define "index" }}
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/assets/styles.css" />
-        <title> Title </title>
-    </head>
-    <body>
-        <main>
-	        <h1>Welcome!</h1>
-	        <p>Email {{ .Email }}</p>
-	        <p>Issuer {{ .Issuer }}</p>
-	        <p>Name {{ .Name }}</p>
-	        <p>SessionID {{ .SessionID }}</p>
-	        <p>Subject {{ .Subject }}</p>
-	        <p>Verified {{ .Verified }}</p>
-	        <a href="/auth/logout"> Logout </a>
-        </main>
-    </body>
-</html>
-{{ end }}
-`)
-
-	// Write the index.html to the module directory.
-	if err := os.WriteFile("cmd/service/assets/templates/index.tmpl", index, 0644); err != nil {
+	// Get the index.tmpl HTML template.
+	indexTmpl, err := a.templatesPort.Get("index.tmpl", a.cfg)
+	if err != nil {
 		return err
 	}
 
-	// Get the login.html template.
-	login := []byte(`{{ define "login" }}
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/static/styles.css" />
-        <title> Title </title>
-    </head>
-    <body>
-        <main>
-        	<a href="/auth/login"> Login </a>
-        </main>
-    </body>
-</html>
-{{ end }}
-`)
-
-	// Write the login.html to the module directory.
-	if err := os.WriteFile("cmd/service/assets/templates/login.tmpl", login, 0644); err != nil {
+	// Write the index.tmpl to the module directory.
+	if err := os.WriteFile("cmd/service/assets/templates/index.tmpl", indexTmpl, 0644); err != nil {
 		return err
 	}
 
-	// Write the styles.css.
-	styles, _ := a.templatesPort.Get("styles", a.cfg)
+	// Get the login.tmpl HTML template.
+	loginTmpl, err := a.templatesPort.Get("login.tmpl", a.cfg)
+	if err != nil {
+		return err
+	}
 
-	if err := os.WriteFile("cmd/service/assets/static/styles.css", styles, 0644); err != nil {
+	// Write the login.tmpl to the module directory.
+	if err := os.WriteFile("cmd/service/assets/templates/login.tmpl", loginTmpl, 0644); err != nil {
+		return err
+	}
+
+	// Get the base.css template.
+	baseCss, err := a.templatesPort.Get("base.css", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the base.css to the module directory.
+	if err := os.WriteFile("cmd/service/assets/static/base.css", baseCss, 0644); err != nil {
+		return err
+	}
+
+	// Get the theme.css template.
+	themeCss, err := a.templatesPort.Get("theme.css", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the theme.css to the module directory.
+	if err := os.WriteFile("cmd/service/assets/static/theme.css", themeCss, 0644); err != nil {
+		return err
+	}
+
+	// Get the styles.css template.
+	stylesCss, err := a.templatesPort.Get("styles.css", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the styles.css to the module directory.
+	if err := os.WriteFile("cmd/service/assets/static/styles.css", stylesCss, 0644); err != nil {
 		return err
 	}
 
@@ -141,125 +145,148 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
+	os.MkdirAll("internal/app", 0755)
 	os.MkdirAll("internal/app/adapters/ingres/ui", 0755)
 
+	// Get the errors.go template.
+	errorsGo, err := a.templatesPort.Get("errors.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the errors.go to the module directory.
+	if err := os.WriteFile("internal/app/errors.go", errorsGo, 0644); err != nil {
+		return err
+	}
+
 	// Get the index.go template.
-	index_go, err := a.templatesPort.Get("index.go", a.cfg)
+	indexGo, err := a.templatesPort.Get("index.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the index.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/index.go", index_go, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/index.go", indexGo, 0644); err != nil {
 		return err
 	}
 
 	// Get the index_test.go template.
-	index_test_go, err := a.templatesPort.Get("index_test.go", a.cfg)
+	indexTestGo, err := a.templatesPort.Get("index_test.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the index_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/index_test.go", index_test_go, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/index_test.go", indexTestGo, 0644); err != nil {
 		return err
 	}
 
 	// Get the login.go template.
-	login_go, err := a.templatesPort.Get("login.go", a.cfg)
+	loginGo, err := a.templatesPort.Get("login.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the login.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/login.go", login_go, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/login.go", loginGo, 0644); err != nil {
 		return err
 	}
 
 	// Get the login_test.go template.
-	login_test_go, err := a.templatesPort.Get("login_test.go", a.cfg)
+	loginTestGo, err := a.templatesPort.Get("login_test.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the login_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/login_test.go", login_test_go, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/login_test.go", loginTestGo, 0644); err != nil {
+		return err
+	}
+
+	// Get the middleware.go template.
+	middlewareGo, err := a.templatesPort.Get("middleware.go", a.cfg)
+	if err != nil {
+		return err
+	}
+
+	// Write the middleware.go to the module directory.
+	if err := os.WriteFile("internal/app/adapters/ingres/middleware.go", middlewareGo, 0644); err != nil {
 		return err
 	}
 
 	// Get the view.go template.
-	view_go, err := a.templatesPort.Get("view.go", a.cfg)
+	viewGo, err := a.templatesPort.Get("view.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the view.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/view.go", view_go, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/view.go", viewGo, 0644); err != nil {
 		return err
 	}
 
 	// Get the view_test.go template.
-	view_test_go, err := a.templatesPort.Get("view_test.go", a.cfg)
+	viewTestGo, err := a.templatesPort.Get("view_test.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the view_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/view_test.go", view_test_go, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/view_test.go", viewTestGo, 0644); err != nil {
 		return err
 	}
 
 	// Get the router.go template.
-	router, err := a.templatesPort.Get("router.go", a.cfg)
+	routerGo, err := a.templatesPort.Get("router.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the router.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/router.go", router, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/router.go", routerGo, 0644); err != nil {
 		return err
 	}
 
 	// Get the router_test.go template.
-	router_test, err := a.templatesPort.Get("router_test.go", a.cfg)
+	routerTestGo, err := a.templatesPort.Get("router_test.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
 	// Write the router_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/router_test.go", router_test, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/router_test.go", routerTestGo, 0644); err != nil {
 		return err
 	}
 
 	os.MkdirAll("internal/app/adapters/ingres/testdata", 0755)
 	os.MkdirAll("internal/app/adapters/ingres/ui/testdata", 0755)
 
-	// Write the index.html to the testdata directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/testdata/index.tmpl", index, 0644); err != nil {
+	// Write the index.tmpl to the testdata directories.
+	if err := os.WriteFile("internal/app/adapters/ingres/testdata/index.tmpl", indexTmpl, 0644); err != nil {
 		return err
 	}
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/index.tmpl", index, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/index.tmpl", indexTmpl, 0644); err != nil {
 		return err
 	}
 
-	// Write the login.html to the testdata directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/testdata/login.tmpl", login, 0644); err != nil {
+	// Write the login.tmpl to the testdata directories.
+	if err := os.WriteFile("internal/app/adapters/ingres/testdata/login.tmpl", loginTmpl, 0644); err != nil {
 		return err
 	}
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/login.tmpl", login, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/login.tmpl", loginTmpl, 0644); err != nil {
 		return err
 	}
 
 	os.MkdirAll("internal/app/config", 0755)
 
-	// Get the handlers.go template.
-	config, err := a.templatesPort.Get("config.go", a.cfg)
+	// Get the config.go template.
+	configGo, err := a.templatesPort.Get("config.go", a.cfg)
 	if err != nil {
 		return err
 	}
 
-	// Write the handlers.go to the module directory.
-	if err := os.WriteFile("internal/app/config/config.go", config, 0644); err != nil {
+	// Write the config.go to the module directory.
+	if err := os.WriteFile("internal/app/config/config.go", configGo, 0644); err != nil {
 		return err
 	}
 

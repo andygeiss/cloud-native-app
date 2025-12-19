@@ -13,6 +13,24 @@
 **Cloud Native App** automates the process of bootstrapping a repository.
 It generates a project structure with everything you need to start coding right away.
 
+## Features
+
+- **Project Scaffolding** — Generates complete project structure with hexagonal architecture
+- **OIDC Authentication** — Pre-configured OpenID Connect setup with Keycloak
+- **HTMX-Ready Templates** — Server-rendered HTML with HTMX for interactivity
+- **Event-Driven Architecture** — Kafka integration for messaging between services
+- **Testing Infrastructure** — Test setup with assertion helpers and testdata patterns
+- **CI/CD Ready** — GitHub Actions workflows and Justfile task runner
+
+## Technologies Used
+
+- [Go](https://golang.org/) — Primary programming language
+- [HTMX](https://htmx.org/) — Frontend interactivity without JavaScript frameworks
+- [Keycloak](https://www.keycloak.org/) — Identity and access management (OIDC)
+- [Apache Kafka](https://kafka.apache.org/) — Event streaming platform
+- [cloud-native-utils](https://github.com/andygeiss/cloud-native-utils) — Shared utilities library
+- [Just](https://github.com/casey/just) — Command runner for development tasks
+
 ## Project Motivation
 
 The motivation behind **Cloud Native App** is to provide a practical example of implementing
@@ -89,6 +107,20 @@ OIDC_CLIENT_SECRET="8d6Gb5ZDNY2qlvFxCRNmPh3gozKtidRQ"
 
 Open the UI in your browser:
 
-[http://localhost:8080/ui](http://localhost:8080/ui])
+[http://localhost:8080/ui](http://localhost:8080/ui)
 
 ![alt text](image.png)
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

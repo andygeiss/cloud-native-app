@@ -17,7 +17,7 @@ import (
 //go:embed testdata
 var efs embed.FS
 
-func Test_Router_Serve_Profile(t *testing.T) {
+func Test_Route_With_ProfileRequest_Should_Return200(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
 	te.Parse("testdata/*.tmpl")
@@ -37,7 +37,7 @@ func Test_Router_Serve_Profile(t *testing.T) {
 	assert.That(t, "status code must be 200", w.Code, http.StatusOK)
 }
 
-func Test_Router_ViewIndex_Should_Redirect_To_Login(t *testing.T) {
+func Test_Route_With_UnauthenticatedIndex_Should_RedirectToLogin(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
 	te.Parse("testdata/*.tmpl")
@@ -47,7 +47,7 @@ func Test_Router_ViewIndex_Should_Redirect_To_Login(t *testing.T) {
 	}
 	ctx := context.Background()
 	mux := ingres.Route(ctx, cfg)
-	r, _ := http.NewRequest("GET", "/ui", nil)
+	r, _ := http.NewRequest("GET", "/ui/", nil)
 	w := httptest.NewRecorder()
 
 	// Act
@@ -57,7 +57,7 @@ func Test_Router_ViewIndex_Should_Redirect_To_Login(t *testing.T) {
 	assert.That(t, "status code must be 302", w.Code, http.StatusFound)
 }
 
-func Test_Router_ViewLogin_Should_Render_Login_Page(t *testing.T) {
+func Test_Route_With_LoginRequest_Should_RenderLoginPage(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
 	te.Parse("testdata/*.tmpl")

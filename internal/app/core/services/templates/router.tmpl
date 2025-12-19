@@ -26,7 +26,13 @@ func Route(ctx context.Context, cfg *config.Config) *http.ServeMux {
 	mux.HandleFunc("GET /debug/pprof/", http.DefaultServeMux.ServeHTTP)
 
 	// Add the index endpoint.
-	mux.HandleFunc("GET /ui", logging.WithLogging(cfg.Logging,
+	mux.HandleFunc("GET /ui/", logging.WithLogging(cfg.Logging,
+		security.WithAuth(serverSessions, ui.ViewIndex(cfg))))
+
+	// Add session-aware index endpoints (for OIDC callback redirects).
+	mux.HandleFunc("GET /ui/{session_id}/", logging.WithLogging(cfg.Logging,
+		security.WithAuth(serverSessions, ui.ViewIndex(cfg))))
+	mux.HandleFunc("GET /ui/{session_id}", logging.WithLogging(cfg.Logging,
 		security.WithAuth(serverSessions, ui.ViewIndex(cfg))))
 
 	// Add the login endpoint.

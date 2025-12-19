@@ -11,12 +11,12 @@ import (
 	"github.com/andygeiss/cloud-native-utils/templating"
 )
 
-func Test_IndexHandler_Should_Redirect_To_Login(t *testing.T) {
+func Test_ViewIndex_With_NoSession_Should_RedirectToLogin(t *testing.T) {
 	// Arrange
 	te := templating.NewEngine(efs)
 	te.Parse("testdata/*.tmpl")
 	cfg := &config.Config{Templating: te}
-	r, _ := http.NewRequest("GET", "/ui", nil)
+	r, _ := http.NewRequest("GET", "/ui/", nil)
 	w := httptest.NewRecorder()
 
 	// Act

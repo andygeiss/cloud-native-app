@@ -1,0 +1,78 @@
+{{ define "errors.go" }}package app
+
+import "errors"
+
+// Error catalog for the application.
+// All application errors should be defined here for consistency.
+var (
+	// ErrBadRequest indicates a malformed or invalid request.
+	ErrBadRequest = errors.New("bad request")
+
+	// ErrForbidden indicates the user does not have permission.
+	ErrForbidden = errors.New("forbidden")
+
+	// ErrInternalServer indicates an unexpected server error.
+	ErrInternalServer = errors.New("internal server error")
+
+	// ErrNotFound indicates the requested resource was not found.
+	ErrNotFound = errors.New("not found")
+
+	// ErrUnauthorized indicates the user is not authenticated.
+	ErrUnauthorized = errors.New("unauthorized")
+
+	// ErrValidation indicates input validation failed.
+	ErrValidation = errors.New("validation error")
+)
+
+// ErrorCode represents a unique error code for client-facing errors.
+type ErrorCode string
+
+const (
+	// CodeBadRequest is returned for malformed requests.
+	CodeBadRequest ErrorCode = "BAD_REQUEST"
+
+	// CodeForbidden is returned when access is denied.
+	CodeForbidden ErrorCode = "FORBIDDEN"
+
+	// CodeInternalServer is returned for server errors.
+	CodeInternalServer ErrorCode = "INTERNAL_ERROR"
+
+	// CodeNotFound is returned when a resource is not found.
+	CodeNotFound ErrorCode = "NOT_FOUND"
+
+	// CodeUnauthorized is returned when authentication is required.
+	CodeUnauthorized ErrorCode = "UNAUTHORIZED"
+
+	// CodeValidation is returned for validation errors.
+	CodeValidation ErrorCode = "VALIDATION_ERROR"
+)
+
+// AppError represents an application error with additional context.
+type AppError struct {
+	Code    ErrorCode
+	Err     error
+	Message string
+}
+
+// Error implements the error interface.
+func (a *AppError) Error() string {
+	if a.Message != "" {
+		return a.Message
+	}
+	return a.Err.Error()
+}
+
+// Unwrap returns the underlying error.
+func (a *AppError) Unwrap() error {
+	return a.Err
+}
+
+// NewAppError creates a new application error.
+func NewAppError(code ErrorCode, err error, message string) *AppError {
+	return &AppError{
+		Code:    code,
+		Err:     err,
+		Message: message,
+	}
+}
+{{ end }}

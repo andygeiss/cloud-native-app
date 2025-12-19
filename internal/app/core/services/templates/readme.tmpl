@@ -1,0 +1,111 @@
+{{ define "readme.md" }}# {{ .Module }}
+
+A cloud-native Go service built with hexagonal architecture.
+
+## Project Motivation
+
+This project provides a secure, scalable web service using modern cloud-native patterns and best practices.
+
+## Features
+
+- **Authentication**: OpenID Connect (OIDC) via Keycloak
+- **Session Management**: Server-side sessions with secure cookie handling
+- **Templating**: HTML templates with HTMX for interactivity
+- **Logging**: Structured logging with slog
+- **Security**: CSRF protection, secure headers, and input validation
+
+## Technologies Used
+
+- **Go**: Programming language
+- **HTMX**: HTML extensions for AJAX, CSS transitions, WebSockets
+- **Keycloak**: Identity and access management
+- **cloud-native-utils**: Utility library for security, logging, messaging, templating
+
+## Getting Started
+
+### Prerequisites
+
+- Go 1.23 or later
+- Docker and Docker Compose (for Keycloak)
+- Just command runner (optional)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone {{ .Module }}
+
+# Install dependencies
+go mod download
+
+# Copy environment file
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+### Running the Service
+
+```bash
+# Using Just
+just run
+
+# Or directly
+go run ./cmd/service
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+go test ./...
+
+# Run with coverage
+go test -cover ./...
+```
+
+## Project Structure
+
+```
+.
+├── cmd/
+│   └── service/           # Application entry point
+│       ├── main.go
+│       └── assets/
+│           ├── static/    # CSS, JS files
+│           └── templates/ # HTML templates
+├── internal/
+│   └── app/
+│       ├── adapters/
+│       │   └── ingres/    # Incoming adapters (HTTP handlers)
+│       │       └── ui/    # UI handlers
+│       ├── config/        # Configuration
+│       └── errors.go      # Error catalog
+├── .env                   # Environment variables
+├── .gitignore
+└── README.md
+```
+
+## Configuration
+
+Environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PORT` | Server port | `8080` |
+| `OIDC_ISSUER` | Keycloak issuer URL | - |
+| `OIDC_CLIENT_ID` | OIDC client ID | - |
+| `OIDC_CLIENT_SECRET` | OIDC client secret | - |
+| `SESSION_SECRET` | Session encryption key | - |
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+{{ end }}

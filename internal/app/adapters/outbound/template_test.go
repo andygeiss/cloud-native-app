@@ -12,14 +12,18 @@ import (
 //go:embed testdata
 var efs embed.FS
 
-func TestTemplate_Get_OK(t *testing.T) {
+func Test_TemplatesAdapter_Get_With_ValidTemplate_Should_ReturnContent(t *testing.T) {
+	// Arrange
 	cfg := &config.Config{
 		Efs:       efs,
 		Templates: "testdata/*.tmpl",
 	}
 	a := outbound.NewTemplatesAdapter(cfg)
 
+	// Act
 	out, err := a.Get("test", nil)
+
+	// Assert
 	assert.That(t, "err must be nil", err, nil)
 	assert.That(t, "out must be OK", string(out), "OK")
 }

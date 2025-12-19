@@ -26,14 +26,13 @@ func init() {
 	cfg.TemplatesPort = outbound.NewTemplatesAdapter(cfg)
 }
 
-func TestModuleService_CreateModule(t *testing.T) {
+func Test_ModuleService_CreateModule_With_ValidConfig_Should_CreateAllFiles(t *testing.T) {
+	// Arrange
 	os.RemoveAll("testdata")
+	svc := services.NewService(cfg)
 
-	// Create a new service with the configuration.
-	service := services.NewService(cfg)
-
-	// Create a new module.
-	err := service.CreateModule()
+	// Act
+	err := svc.CreateModule()
 
 	_, env := os.Stat(".env")
 	_, gitignore := os.Stat(".gitignore")
@@ -55,7 +54,7 @@ func TestModuleService_CreateModule(t *testing.T) {
 	_, gosum := os.Stat("go.sum")
 	_, git := os.Stat(".git")
 
-	// Assert that the module was created successfully.
+	// Assert
 	assert.That(t, "err must be nil", err, nil)
 	assert.That(t, ".env must exists", env, nil)
 	assert.That(t, ".gitignore must exists", gitignore, nil)

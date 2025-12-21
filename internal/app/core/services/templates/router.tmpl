@@ -22,8 +22,10 @@ func Route(ctx context.Context, cfg *config.Config) *http.ServeMux {
 	// Make the server sessions available to the config.
 	cfg.ServerSessions = serverSessions
 
-	// Add the pprof endpoint.
-	mux.HandleFunc("GET /debug/pprof/", http.DefaultServeMux.ServeHTTP)
+	// Add the pprof endpoint (opt-in via ENABLE_PPROF=true).
+	if cfg.EnablePprof {
+		mux.HandleFunc("GET /debug/pprof/", http.DefaultServeMux.ServeHTTP)
+	}
 
 	// Add the index endpoint.
 	mux.HandleFunc("GET /ui/", logging.WithLogging(cfg.Logging,

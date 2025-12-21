@@ -13,6 +13,7 @@ import (
 // Config is the configuration for the service.
 type Config struct {
 	Efs            embed.FS                 `json:"-"`
+	EnablePprof    bool                     `json:"-"`
 	Logging        *slog.Logger             `json:"-"`
 	Messaging      messaging.Dispatcher     `json:"-"`
 	ServerSessions *security.ServerSessions `json:"-"`
@@ -22,6 +23,7 @@ type Config struct {
 // NewConfig creates a new configuration with defaults from environment variables.
 func NewConfig() *Config {
 	return &Config{
+		EnablePprof:        security.ParseBoolOrDefault("ENABLE_PPROF", false),
 		Logging: slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 			Level: slog.LevelInfo,
 		})),

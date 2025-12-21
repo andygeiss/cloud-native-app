@@ -8,9 +8,7 @@ import (
 
 // View defines an HTTP handler function for rendering a template with data.
 func View(cfg *config.Config, name string, data any) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		cfg.Templating.Render(w, name, data)
-	}
+	return cfg.Templating.View(name, data)
 }
 
 {{ end }}

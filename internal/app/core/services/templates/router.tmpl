@@ -1,11 +1,11 @@
-{{ define "router.go" }}package ingres
+{{ define "router.go" }}package inbound
 
 import (
 	"context"
 	"net/http"
 	_ "net/http/pprof"
 
-    "{{ .Module }}/internal/app/adapters/ingres/ui"
+    "{{ .Module }}/internal/app/adapters/inbound/ui"
 	"{{ .Module }}/internal/app/config"
 
 	"github.com/andygeiss/cloud-native-utils/logging"

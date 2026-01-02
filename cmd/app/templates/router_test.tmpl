@@ -1,9 +1,9 @@
-{{ define "router_test.go" }}package ingres_test
+{{ define "router_test.go" }}package inbound_test
 
 import (
 	"context"
 	"embed"
-	"{{ .Module }}/internal/app/adapters/ingres"
+	"{{ .Module }}/internal/app/adapters/inbound"
 	"{{ .Module }}/internal/app/config"
 	"net/http"
 	"net/http/httptest"
@@ -26,7 +26,7 @@ func Test_Route_With_ProfileRequest_Should_Return200(t *testing.T) {
 		Templating: te,
 	}
 	ctx := context.Background()
-	mux := ingres.Route(ctx, cfg)
+	mux := inbound.Route(ctx, cfg)
 	r, _ := http.NewRequest("GET", "/debug/pprof/", nil)
 	w := httptest.NewRecorder()
 
@@ -46,7 +46,7 @@ func Test_Route_With_UnauthenticatedIndex_Should_RedirectToLogin(t *testing.T) {
 		Templating: te,
 	}
 	ctx := context.Background()
-	mux := ingres.Route(ctx, cfg)
+	mux := inbound.Route(ctx, cfg)
 	r, _ := http.NewRequest("GET", "/ui/", nil)
 	w := httptest.NewRecorder()
 
@@ -66,7 +66,7 @@ func Test_Route_With_LoginRequest_Should_RenderLoginPage(t *testing.T) {
 		Templating: te,
 	}
 	ctx := context.Background()
-	mux := ingres.Route(ctx, cfg)
+	mux := inbound.Route(ctx, cfg)
 	r, _ := http.NewRequest("GET", "/ui/login", nil)
 	w := httptest.NewRecorder()
 

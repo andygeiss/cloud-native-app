@@ -1,23 +1,23 @@
 {{ define "justfile" }}set dotenv-load
 
-# Build the service binary by using Profile-Guided Optimization (PGO).
+# Build the server binary by using Profile-Guided Optimization (PGO).
 build:
     @touch .cpuprofile.out
     @go build \
     -ldflags "-s -w" \
     -pgo .cpuprofile.out \
-    -o ./bin/service ./cmd/server/main.go
+    -o ./bin/server ./cmd/server/main.go
 
-# Profile the service and generate a CPU profile.
+# Profile the server and generate a CPU profile.
 # Switch to another route to make the profile more representative.
 profile:
     @go install github.com/tsliwowicz/go-wrk@latest
     @curl -o .cpuprofile.out "http://localhost:$PORT/debug/pprof/profile?seconds=30" &
     @go-wrk -c 100 -d 30 http://localhost:$PORT/static/styles.css
 
-# Run the service.
+# Run the server.
 run: build
-    @./bin/service
+    @./bin/server
 
 # Test the Go sources (Units).
 test:

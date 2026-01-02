@@ -146,7 +146,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	os.MkdirAll("internal/app", 0755)
-	os.MkdirAll("internal/app/adapters/ingres/ui", 0755)
+	os.MkdirAll("internal/app/adapters/inbound/ui", 0755)
 
 	// Get the errors.go template.
 	errorsGo, err := a.templatesPort.Get("errors.go", a.cfg)
@@ -166,7 +166,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the index.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/index.go", indexGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/index.go", indexGo, 0644); err != nil {
 		return err
 	}
 
@@ -177,7 +177,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the index_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/index_test.go", indexTestGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/index_test.go", indexTestGo, 0644); err != nil {
 		return err
 	}
 
@@ -188,7 +188,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the login.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/login.go", loginGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/login.go", loginGo, 0644); err != nil {
 		return err
 	}
 
@@ -199,7 +199,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the login_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/login_test.go", loginTestGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/login_test.go", loginTestGo, 0644); err != nil {
 		return err
 	}
 
@@ -210,7 +210,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the middleware.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/middleware.go", middlewareGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/middleware.go", middlewareGo, 0644); err != nil {
 		return err
 	}
 
@@ -221,7 +221,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the view.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/view.go", viewGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/view.go", viewGo, 0644); err != nil {
 		return err
 	}
 
@@ -232,7 +232,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the view_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/view_test.go", viewTestGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/view_test.go", viewTestGo, 0644); err != nil {
 		return err
 	}
 
@@ -243,7 +243,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the router.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/router.go", routerGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/router.go", routerGo, 0644); err != nil {
 		return err
 	}
 
@@ -254,26 +254,26 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the router_test.go to the module directory.
-	if err := os.WriteFile("internal/app/adapters/ingres/router_test.go", routerTestGo, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/router_test.go", routerTestGo, 0644); err != nil {
 		return err
 	}
 
-	os.MkdirAll("internal/app/adapters/ingres/testdata", 0755)
-	os.MkdirAll("internal/app/adapters/ingres/ui/testdata", 0755)
+	os.MkdirAll("internal/app/adapters/inbound/testdata", 0755)
+	os.MkdirAll("internal/app/adapters/inbound/ui/testdata", 0755)
 
 	// Write the index.tmpl to the testdata directories.
-	if err := os.WriteFile("internal/app/adapters/ingres/testdata/index.tmpl", indexTmpl, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/testdata/index.tmpl", indexTmpl, 0644); err != nil {
 		return err
 	}
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/index.tmpl", indexTmpl, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/testdata/index.tmpl", indexTmpl, 0644); err != nil {
 		return err
 	}
 
 	// Write the login.tmpl to the testdata directories.
-	if err := os.WriteFile("internal/app/adapters/ingres/testdata/login.tmpl", loginTmpl, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/testdata/login.tmpl", loginTmpl, 0644); err != nil {
 		return err
 	}
-	if err := os.WriteFile("internal/app/adapters/ingres/ui/testdata/login.tmpl", loginTmpl, 0644); err != nil {
+	if err := os.WriteFile("internal/app/adapters/inbound/ui/testdata/login.tmpl", loginTmpl, 0644); err != nil {
 		return err
 	}
 

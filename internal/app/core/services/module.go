@@ -76,8 +76,8 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	os.MkdirAll("cmd/service/assets/static", 0755)
-	os.MkdirAll("cmd/service/assets/templates", 0755)
+	os.MkdirAll("cmd/server/assets/static", 0755)
+	os.MkdirAll("cmd/server/assets/templates", 0755)
 
 	// Get the index.tmpl HTML template.
 	indexTmpl, err := a.templatesPort.Get("index.tmpl", a.cfg)
@@ -86,7 +86,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the index.tmpl to the module directory.
-	if err := os.WriteFile("cmd/service/assets/templates/index.tmpl", indexTmpl, 0644); err != nil {
+	if err := os.WriteFile("cmd/server/assets/templates/index.tmpl", indexTmpl, 0644); err != nil {
 		return err
 	}
 
@@ -97,7 +97,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the login.tmpl to the module directory.
-	if err := os.WriteFile("cmd/service/assets/templates/login.tmpl", loginTmpl, 0644); err != nil {
+	if err := os.WriteFile("cmd/server/assets/templates/login.tmpl", loginTmpl, 0644); err != nil {
 		return err
 	}
 
@@ -108,7 +108,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the base.css to the module directory.
-	if err := os.WriteFile("cmd/service/assets/static/base.css", baseCss, 0644); err != nil {
+	if err := os.WriteFile("cmd/server/assets/static/base.css", baseCss, 0644); err != nil {
 		return err
 	}
 
@@ -119,7 +119,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the theme.css to the module directory.
-	if err := os.WriteFile("cmd/service/assets/static/theme.css", themeCss, 0644); err != nil {
+	if err := os.WriteFile("cmd/server/assets/static/theme.css", themeCss, 0644); err != nil {
 		return err
 	}
 
@@ -130,7 +130,7 @@ func (a *ModuleService) CreateModule() error {
 	}
 
 	// Write the styles.css to the module directory.
-	if err := os.WriteFile("cmd/service/assets/static/styles.css", stylesCss, 0644); err != nil {
+	if err := os.WriteFile("cmd/server/assets/static/styles.css", stylesCss, 0644); err != nil {
 		return err
 	}
 
@@ -140,8 +140,8 @@ func (a *ModuleService) CreateModule() error {
 		return err
 	}
 
-	// Write the main.go to the module directory.
-	if err := os.WriteFile("cmd/service/main.go", maingo, 0644); err != nil {
+	// Write the main.go to the server directory.
+	if err := os.WriteFile("cmd/server/main.go", maingo, 0644); err != nil {
 		return err
 	}
 

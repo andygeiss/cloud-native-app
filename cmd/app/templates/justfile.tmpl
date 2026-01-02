@@ -6,7 +6,7 @@ build:
     @go build \
     -ldflags "-s -w" \
     -pgo .cpuprofile.out \
-    -o ./bin/service ./cmd/service/main.go
+    -o ./bin/service ./cmd/server/main.go
 
 # Profile the service and generate a CPU profile.
 # Switch to another route to make the profile more representative.
